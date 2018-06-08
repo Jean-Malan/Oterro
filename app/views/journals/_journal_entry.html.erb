@@ -1,0 +1,11 @@
+<tr>
+     <td>
+        <%= f.hidden_field :_destroy %>
+              <%= link_to "remove", '#', class: "remove_record" %>
+    </td>
+    <td><%= f.text_field :description, label: false, class: 'form-control input' , placeholder: "Description"%></td>
+    <td><%= f.text_field :amount, label: false, class: 'form-control input' , placeholder: "Amount" %></td>
+    <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn"  %>
+    <td><%= f.check_box :debit, class: 'form-control input' %></td>
+    <td><%= f.check_box :credit, class: 'form-control input'  %></td>
+</tr>

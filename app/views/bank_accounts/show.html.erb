@@ -1,0 +1,82 @@
+
+
+<% if notice %>
+    <p class= 'alert alert-success'><%= notice %> <a href="#" data-dismiss="alert" class="close">×</a></p>
+<% end %>
+
+  <div class="col-md-3">
+    <div class="card card-stats">
+    <div class="card-header card-header-success card-header-icon">
+    <div class="card-icon">
+    <i class="material-icons">store</i>
+  </div>
+   <p class="card-category"> Account balance:</p>
+   <% @bank_total = 0 %>
+    <h3 class="card-title"> <% @transactions.each do |transaction| %>
+                            <% if transaction.bank_id == @bank_account.id %>
+                            <% @bank_total += transaction.amount %>
+                             <% end %> 
+                              <% end %> 
+                              <%= @bank_total %></h3>
+                            
+                         
+                            
+    </div>
+     </div>
+     </div>
+     </div>
+     
+
+<%= link_to 'New Payments', new_payment_entry_path, class:'btn btn-warning' %><%= link_to 'New Receipts', new_receipt_entry_path, class:'btn btn-success' %>
+
+ <div class="card">
+     
+ <div class="card-body table-responsive">
+   <table class="table table-hover">
+    <thead class="text-warning">
+      <tr>
+        <th colspan="0.3"></th>
+        <th scope="col">Date</th>
+        <th scope="col">Description</th>
+        <th scope="col">Account</th>
+        <th scope="col">Amount</th>
+
+        <th colspan="1"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <% @transactions.each do |transaction| %>
+         <% if transaction.bank_id == @bank_account.id %>
+              <td><% if transaction.payment_entry_id %>
+     <h2><strong><center><font color =" #EC971F">•</font></strong></center></h2>
+     <% else %>
+      <h2><strong><center><font color =" #47A44B">•</font></strong></center></h2>
+      <% end %>
+      
+          <td><div class ="table-color"><%= transaction.date %></div></td>
+          <td><div class ="table-color"><%=  transaction.description %></div></td>
+          <td><div class ="table-color"><%=  transaction.gl_account ? transaction.gl_account.name : "No account"  %></div></td>
+          <td><div class ="table-color"><%= link_to transaction.amount, edit_transaction_path(transaction) %></td>
+          <td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      
+        <%end%>
+        <%end%>
+      </tbody>
+    </table>
+    </div>
+    </div>
+
+</div>
+</div>
+<br>
+
+<%= link_to 'Edit', edit_bank_account_path(@bank_account) %> |
+<%= link_to 'Back', bank_accounts_path %>
+
+<div class ="pagination
+
+
+
+

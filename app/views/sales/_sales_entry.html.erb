@@ -1,0 +1,16 @@
+<tr>
+    <td>
+              <%= f.hidden_field :_destroy %>
+              <%= link_to "remove", '#', class: "remove_record" %>
+    </td>
+    
+    
+
+    <td><%= f.text_field :product_id, label: false, class:"form-control" %></td>
+     <td><%= f.text_field :description, label: false, class:"form-control" %></td>
+    <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn" %></td>
+    <td><%= f.text_field :quantity, label: false, class:"form-control" %></td>
+    <td><%= f.text_field :price, label: false, class:"form-control" %></td>
+    
+     
+</tr>

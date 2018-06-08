@@ -1,0 +1,114 @@
+<p id="notice"><%= notice %></p>
+
+<center>
+
+<div class= "card col-md-10" style="background-color:#f2f2f2;">
+ 
+  <% if @sale.sales_type == "invoice" %>
+                <div class="card-header card-header-success">
+                    <h4 class="card-title">Sale</h4>
+                      <p class="card-category"></p>
+                      </div> 
+                              <% else if @sale.sales_type == "draft" %>
+                               <div class="card-header card-header-danger">
+                                 <h4 class="card-title">Draft</h4>
+                                   <p class="card-category"></p>
+                                           </div> 
+                                           <% else if @sale.sales_type == "Quote" %>
+                                             <div class="card-header card-header-warning">
+                                               <h4 class="card-title">Draft</h4>
+                                                 <p class="card-category"></p>
+                                           </div> 
+                                     <% end %>
+                                     <% end %>
+                                     <% end %>
+   <table class = "table">
+    <thead >
+      <tr><center>
+    <th>Date: </th>
+   <th>  <%= @sale.date %> </td></th>
+   <th></th>
+   <th> <strong>Invoice Type:</strong><br></th>
+    <th>  <%= @sale.sales_type %></th>
+     <th> <strong>Customer:</strong><br></th>
+    <th><%= @sale.contact_id ? @sale.contact.name : '' %> </br>
+       <%= @sale.contact_id ? @sale.contact.address_one : '' %> </br>
+      <%= @sale.contact_id ? @sale.contact.city : '' %> </br>
+   </tr></center>
+  </div>
+ </div>
+
+</div>
+  </br></br></br>
+  
+<div class= "card">
+  <table class = "table">
+    <thead style="background-color:#fff;">
+    <tr>
+     
+      <th class ="colspan-1">Description</th>
+       <th class ="colspan-1">Product</th>
+      <th class ="colspan-1">Account</th>
+      <th class ="colspan-1">Quantity</th>
+      <th class ="colspan-1">Amount</th>
+      <th class ="colspan-1">Total</th>
+
+    </tr>
+  </thead>
+      <tbody>
+       <% @sale_entry.each do |entry| %>
+     <% if entry.sale_id == @sale.id %>
+
+   <td style="background-color:#fff;">  <%= entry.description %></td>
+   <td style="background-color:#fff;"> <%= entry.product_id ? entry.product_id : ' ' %></td>
+   <td style="background-color:#fff;"> <%= entry.gl_account ? entry.gl_account.name : ' ' %></td>
+   <td style="background-color:#fff;"> <%= entry.quantity %></td>
+   <td style="background-color:#fff;"> <%= entry.price %></td>
+   <% if entry.quantity.to_i > 0 %>
+   <% @total = 0 %>
+   <% @total += (entry.quantity * entry.price ) %>
+   <td style="background-color:#fff;"><strong><%= @total %></strong></td>
+   <% else %>
+    <td style="background-color:#fff;"><strong><%= entry.price %></strong></td>
+   </br>
+   <% end %>
+    
+  </tbody>
+       <% end %>
+      <% end %>
+      <tbody>
+        <tr>
+        <td style="background-color:#fff;"><strong>Total:</strong></td>
+        <td style="background-color:#fff;"></td>
+        <td style="background-color:#fff;"></td>
+        <td style="background-color:#fff;"></td>
+         <td style="background-color:#fff;"></td>
+           <% @invoice_total = 0 %>
+          <% @sale_entry.each do |entry| %>
+            <% if entry.sale_id == @sale.id %>
+            <% if entry.quantity.to_i < 0 %>
+            <% @invoice_total += entry.price.to_i  %>
+            <% else %>
+            <% @invoice_total += (entry.price.to_i * entry.quantity.to_i) %>
+            <% if @invoice_total != 0 %>
+             <% end %>
+             <% end %>
+              <% end %>
+               
+             <% end %>
+             <td style="background-color:#fff;"><strong><%= @invoice_total %> </strong></td>
+          </tr>
+            
+          </tbody>
+          
+  </table>
+  </div>
+  <%= link_to 'Edit', edit_sale_path(@sale), class: "btn btn-default" %> |
+<%= link_to 'Back', sales_path ,class:"btn btn-default"%>
+ </center>
+
+ 
+ 
+
+
+

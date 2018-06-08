@@ -1,0 +1,83 @@
+
+
+  <center>
+<div class="form-fields">
+<%= simple_form_for(@transaction) do |f| %>
+  <% if @transaction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+      <ul>
+      <% @transaction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+><div class="justify-content-md-center">
+  <div class="col-lg-6 col-md-12">
+  <div class = "card">
+   <div class="card-header card-header-info">
+                                    <h4 class="card-title">New Transaction</h4>
+                                    <p class="card-category"></p>
+                                     </div> 
+    <div class="card-text">
+  <form class="needs-validation" novalidate>
+ 
+    <div class="btn-group">
+  <div class="col-md-18">
+   <center id="input"> <%= f.label :date %></center> 
+   <center> <%= f.date_select :date %></center> 
+    </div>
+    </div>
+    <br>
+    
+   
+    <div class="btn-group">
+     <div class="col-md-18">
+    <center><%= f.label :account_id %><br></center> 
+
+     <center> <%= collection_select(:transaction, :account_id, GlAccount.all, :id, :name, prompt: true, class: "dropdown-menu") %></center> 
+ 
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="btn-group">
+     <div class="col-md-18">
+    <center><%= f.label :bank_id %><br></center> 
+     <center>  <%= collection_select(:transaction, :bank_id, BankAccount.all, :id, :name, prompt: true, class: "dropdown-menu") %></center>  
+        </div>
+    </div>
+    <br>
+     
+          <div class="btn-group">
+     <div class="col-md-18">
+  <center>  <%= f.label :description %><br></center> 
+   <center> <%= f.text_field :description, class: 'form-control input'  %></center> 
+    </div>
+    </div>
+    <br>
+  
+    <center> <%= f.label :vat %>   </center> 
+   <center> <%= f.check_box :vat %>  </center>
+  
+
+      <div class="btn-group">
+     <div class="col-md-18">
+  <center>  <%= f.label :amount %><br></center> 
+   <center> <%= f.text_field :amount, class: 'form-control input'  %></br></center> 
+     </div>
+    </div>
+    
+
+
+
+    </div>
+ <div class="actions">
+   <%= f.submit 'Add Transaction', class: 'btn btn-info'%>
+   <%= f.submit "Add and New Transaction", formaction: new_transaction_path %>
+<% end %>  
+<%= link_to 'Back', bank_accounts_path, class: "btn btn-default" %>
+</div>
+</center>

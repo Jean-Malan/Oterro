@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Invoice number:</strong>
+  <%= @purchase.invoice_number %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @purchase.contact_id %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @purchase.date %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @purchase.notes %>
+</p>
+
+<p>
+  <strong>Purchases type:</strong>
+  <%= @purchase.purchases_type %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @purchase.user_id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @purchase.amount %>
+</p>
+
+<p>
+  <strong>Puchase:</strong>
+  <%= @purchase.puchase_id %>
+</p>
+
+<%= link_to 'Edit', edit_purchase_path(@purchase) %> |
+<%= link_to 'Back', purchases_path %>

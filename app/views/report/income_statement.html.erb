@@ -1,0 +1,144 @@
+<p id="notice"><%= notice %></p>
+
+<h1><center><strong>Income Statement</strong></center></h1>
+</br>
+
+<center>
+
+<div class= "card col-md-9">
+<table class="table table-hover">
+  <thead>
+    <tr class="card-header card-header-info">
+     <th><strong> Account</strong></th>
+      <th><strong></strong></th>
+      <th><strong> Balance</strong></th>
+    </tr>
+  </thead>
+
+ <tbody>
+   <td><h5><strong>Revenue</strong></h5></td>
+   <td></td>
+   <td></td>
+  </tbody>
+  
+  <!----------------------------------------------- Revenue -------------------------------------------- !-->
+  <tbody>
+
+   <% @gl_accounts.each do |account| %>
+         
+         <% if account.account_type == 'sales' %>
+      <tr>
+        <td> <%= account.code %> - <%= account.name %></td>
+        <td> </td>
+        <% @sales_income = 0 %>
+         <% @sales_income += account.transactions.sum(:amount) + account.journal_entries.sum(:amount)  %>
+         <% @sales.each do |sale| %>
+         <% if sale.sales_type == 'invoice' %> 
+               <% @sales_income += sale.sales_entries.sum(:total_price) %>
+               
+    <% end %>
+     <% end %>
+     <% end %>
+     <% end %>
+             <td><%= @sales_income %></td>
+         
+      </tr>
+  </tbody>
+  
+  
+  <tbody>
+    <% @gl_accounts.each do |account| %>
+         
+         <% if account.account_type == 'other_income' %>
+      <tr>
+         <td> <%= account.code %> - <%= account.name %></td>
+        <td> </td>
+        <% @other_income = 0 %>
+        <td><%= @other_income += account.transactions.sum(:amount) + account.journal_entries.sum(:amount) - account.sales_entries.sum(:price)  %></td>
+      </tr>
+    <% end %>
+
+    <% end %>
+  </tbody>
+  
+  
+  <!----------------------------------------------- Cost of sales  -------------------------------------------- !-->
+    <tbody>
+   <td><h5><strong>Cost of Sales</strong></h5></td>
+   <td></td>
+   <td></td>
+  </tbody>
+   
+   <tbody>
+   
+     <% @gl_accounts.zip(@purchases).each do |account, purchases| %>
+         
+         <% if account.account_type == 'cost_of_sales'%>
+
+      <tr>
+          <td> <%= account.code %> - <%= account.name %></td>
+        <td> </td>
+        <% @cost_of_sales = 0 %>
+        <% @cost_of_sales += account.transactions.sum(:amount)  + account.journal_entries.sum(:amount)  %>
+        <% @purchases.each do |purchase| %>
+         <% if purchase.purchases_type == 'invoice' %> 
+               <% @cost_of_sales  -= purchase.purchase_entries.sum(:total_price) %>
+           <% end %>    
+    <% end %>
+   <% end %>
+    <% end %>
+<td><%= @cost_of_sales %></td>
+</tr>
+  </tbody>
+  
+    <!----------------------------------------------- Gross Profit  -------------------------------------------- !-->
+ 
+ <tbody>
+     <tr>
+   <td><h5><strong>Gross Profit</strong></h5></td>
+   <td></td>
+   <td><h5><strong><%= @gross_profit = @cost_of_sales  + @sales_income  %></h5></strong></td>
+   </tr>
+  </tbody>
+  
+      <!----------------------------------------------- Operating Expenses  -------------------------------------------- !-->
+  
+  <tbody>
+   <td><h5><strong>Operating Expenses</strong></h5></td>
+   <td></td>
+   <td></td>
+  </tbody>
+   
+   
+   
+   <tbody>
+
+     <% @gl_accounts.each do |account| %>
+         
+         <% if account.account_type == 'operating_expense' %>
+      <tr>
+          <td> <%= account.code %> - <%= account.name %></td>
+        <td> </td>
+        <% @operating_expense = 0 %>
+       <%  @operating_expense += account.transactions.sum(:amount) - account.journal_entries.sum(:amount)  %>
+        <td><%= @operating_expense  %></td>
+      </tr>
+      <% end %>
+   <% end %>
+
+      
+  </tbody>
+       <!----------------------------------------------- Net Profit -------------------------------------------- !-->
+  
+  <tbody>
+   <td><h5><strong><u>Net Profit</u></strong></h5></td>
+   <td></td>
+   <td><h5><strong><%= @net_profit %></h5></strong></td>
+  </tbody>
+ 
+  
+</table>
+</center>
+</div>
+
+
