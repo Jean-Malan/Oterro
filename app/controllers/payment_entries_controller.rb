@@ -17,10 +17,13 @@ class PaymentEntriesController < ApplicationController
     @payment_entry = PaymentEntry.new
     @payment_entry.transactions.build
 
-
-    
   end
-
+  
+ def invoice_entry
+    @payment_entry = PaymentEntry.new
+    @payment_entry.transactions.build
+  end
+  
   # GET /payment_entries/1/edit
   def edit
     
@@ -75,6 +78,6 @@ class PaymentEntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payment_entry_params
-      params.require(:payment_entry).permit(:transaction_id, :id, transactions_attributes: [:id, :payment, :date, :description, :amount, :reference, :bank_id, :gl_account_id, :account_id, :purchase_invoice_id, :sales_invoice_id, :contact_id, :vat_amount, :vat, :transaction_type, :payment_entry_id, :_destroy])
+      params.require(:payment_entry).permit(:transaction_id, :id, transactions_attributes: [:id, :payment, :date, :description, :purchase_id, :bank_account_id, :total_amount, :amount, :reference, :bank_id, :gl_account_id, :account_id, :purchase_invoice_id, :sales_invoice_id, :contact_id, :vat_amount, :vat, :transaction_type, :vat_type, :payment_entry_id, :_destroy])
     end
 end

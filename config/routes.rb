@@ -1,12 +1,19 @@
 Rails.application.routes.draw do
+ 
+  get 'purchases/paid'
+  get 'purchases/draft_index'
+  get 'purchases/unpaid'
+  get 'purchases/partially_paid'
   get 'report/income_statement'
-
   get 'report/balance_sheet'
-
   get 'report/trial_balance'
-
   get 'report/general_ledger'
-
+  get 'payment_entries/invoice_entry'
+  get 'receipt_entries/invoice_entry'
+   get 'sales/paid'
+  get 'sales/draft_index'
+  get 'sales/unpaid'
+  get 'sales/partially_paid'
   resources :journals
   resources :journal_entries
   resources :products
@@ -26,6 +33,7 @@ Rails.application.routes.draw do
   resources :gl_accounts
   resources :transactions
   get 'index/home'
+ 
   root 'index#home'
  
 end

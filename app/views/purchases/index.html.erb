@@ -2,7 +2,7 @@
     <p class= 'alert alert-success'><%= notice %></p>
 <% end %>
 </br>
-<%= link_to 'Invoice', purchases_invoice_path,  class: "btn btn-success" %> |  <%= link_to 'Draft', purchases_draft_path,  class: "btn btn-danger" %>
+<%= link_to 'New Invoice', purchases_invoice_path,  class: "btn btn-primary col-md-4" %> <%= link_to 'Drafts', purchases_draft_index_path,  class: "btn btn-default pull-right" %><%= link_to 'Outstanding', purchases_paid_path,  class: "btn btn-danger pull-right" %><%= link_to 'Partially Paid', purchases_partially_paid_path,  class: "btn btn-warning pull-right" %><%= link_to 'Paid', purchases_paid_path,  class: "btn btn-success pull-right" %><%= link_to 'All', purchases_path,  class: "btn btn-info pull-right" %>  
 
 
 <br><br>
@@ -30,7 +30,7 @@
              <% purchase.amount  = 0 %>
         <% @purchase_entry.each do |entry| %>
         <% if purchase.id == entry.purchase_id %>
-        <% purchase.amount += entry.total_price.to_f %>
+         <% purchase.amount += entry.total_price.to_f %>
           <% end %>
            <% end %>
            <td><%= purchase.amount %></td>
@@ -39,7 +39,7 @@
              <td>    <% if purchase.purchases_type == 'invoice' %>
             <%= link_to "Invoice", edit_purchase_path(purchase), class:"btn btn-success" %></td>
            
-            <% else if sale.purchases_type == 'draft' %>
+            <% else if purchase.purchases_type == 'draft' %>
             <%= link_to "Draft", edit_purchase_path(purchase), class:"btn btn-danger" %>
   
              <% end %>

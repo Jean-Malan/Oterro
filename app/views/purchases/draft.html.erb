@@ -23,7 +23,7 @@
    <th></th>
    <th>  <%= f.label :customer_id %><br></th>
     <th> <%= f.collection_select(:contact_id, Contact.all, :id, :name, {:prompt => false},  class:"btn ml-auto")  %></th>
-
+  <th>  <%=  f.text_field :invoice_number, placeholder: "Invoice number", class: 'form-control'  %></th>
     <th>  <%=  f.select :purchases_type, Purchase.purchases_types.keys, {}, class: 'btn btn-default pull-right'  %></th>
    </tr></center>
    <th></th>
@@ -39,9 +39,10 @@
     <thead>
     <tr>
       <th class ="colspan-1"></th>
-      <th class ="colspan-1">Product</th>
+       <th class ="colspan-1">Product</th>
       <th class ="colspan-1">Description</th>
       <th class ="colspan-1">Account</th>
+      <th class ="colspan-1">Vat</th>
       <th class ="colspan-1">Quantity</th>
       <th class ="colspan-1">Amount</th>
       <th class ="colspan-1">Total</th>

@@ -5,9 +5,16 @@ class ReportController < ApplicationController
   @transactions = Transaction.all
   @sales = Sale.all
   @purchases = Purchase.all
+
+  
   end
 
   def balance_sheet
+     @gl_accounts = GlAccount.all
+  @transactions = Transaction.all
+  @sales = Sale.all
+  @purchases = Purchase.all
+  @bank_account = BankAccount.all
   end
 
   def trial_balance

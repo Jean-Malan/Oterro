@@ -7,33 +7,54 @@ class PurchasesController < ApplicationController
     @purchases = Purchase.all
     @purchase_entry = PurchaseEntry.all
   end
+  
+    def paid
+    @purchases = Purchase.all
+    @purchase_entry = PurchaseEntry.all
+    @transactions = Transaction.all
+  end
+  
+  def unpaid
+    @purchases = Purchase.all
+   
+  end
+  
+    def partially_paid
+    @purchases = Purchase.all
+    @purchase_entry = PurchaseEntry.all
+    @transactions = Transaction.all
+  end
 
   # GET /purchases/1
   # GET /purchases/1.json
   def show
+    @purchase_entry = PurchaseEntry.all
+    @transactions = Transaction.all
   end
+  
+     def draft_index
+     @purchases = Purchase.where("purchases_type =?", 1)
+    @purchase_entry = PurchaseEntry.all
+  end
+  
 
   # GET /purchases/new
   def new
     @purchase = Purchase.new
-       2.times do
     @purchase.purchase_entries.build
-  end
   end
   
    def invoice
     @purchase = Purchase.new
-       2.times do
     @purchase.purchase_entries.build
-  end
   end
   
    def draft
     @purchase = Purchase.new
-       2.times do
     @purchase.purchase_entries.build
   end
-  end
+  
+
 
 
   # GET /purchases/1/edit
@@ -88,6 +109,6 @@ class PurchasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_params
-      params.require(:purchase).permit(:invoice_number, :contact_id, :date, :notes, :purchases_type, :user_id, :amount, :puchase_id, :id, purchase_entries_attributes: [:id, :product_id, :description, :gl_account_id, :account_id, :quantity, :price, :total_price, :purchase_id, :user_id])
+      params.require(:purchase).permit(:invoice_number, :contact_id, :date, :notes, :purchases_type, :user_id, :amount, :purchase_id, :id, purchase_entries_attributes: [:id, :product_id, :description, :gl_account_id, :account_id, :quantity, :price, :total_price, :purchase_id, :user_id])
     end
 end

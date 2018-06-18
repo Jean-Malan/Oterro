@@ -1,0 +1,21 @@
+<tr>
+    <td>
+         
+              <%= f.hidden_field :_destroy %>
+              <%= link_to "remove", '#', class: "remove_record" %>
+
+    </td>
+    <td>
+    <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td>
+    <td><%= f.text_field :description, label: false, class: 'form-control input'  %></td>
+        <td><%= f.text_field :reference, label: false, class: 'form-control input'  %></td>
+        <td>  <%= f.collection_select :bank_account_id, BankAccount.all, :id, :name, {:prompt => false},class:"btn" %></td>
+        <td><%= f.collection_select :purchase_id, Purchase.all, :id, :invoice_number, {:prompt => false},class:"btn" %></td>
+        <td><%= f.input :vat_type, as: :select, label: " '", collection: Transaction.vat_types.map { |key, value| [key.humanize, key] }, class: "btn" %></td>
+        <td> <%= f.text_field :total_amount, class: 'form-control input'  %></td>
+        <%  f.check_box :payment, :value => true %>
+     
+    </table>
+</div>
+
+

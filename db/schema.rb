@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608112640) do
+ActiveRecord::Schema.define(version: 20180614090932) do
 
   create_table "bank_accounts", force: :cascade do |t|
     t.integer  "code"
@@ -100,9 +100,11 @@ ActiveRecord::Schema.define(version: 20180608112640) do
     t.integer  "total_price"
     t.integer  "purchase_id"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "gl_account_id"
+    t.integer  "vat_type",      default: 0
+    t.float    "vat_amount"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -136,11 +138,12 @@ ActiveRecord::Schema.define(version: 20180608112640) do
     t.integer  "customer_id"
     t.integer  "type"
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "sale_id",     default: 0
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "sale_id",        default: 0
     t.integer  "contact_id"
     t.integer  "sales_type"
+    t.integer  "invoice_number"
   end
 
   create_table "sales_entries", force: :cascade do |t|
@@ -155,6 +158,7 @@ ActiveRecord::Schema.define(version: 20180608112640) do
     t.datetime "updated_at",    null: false
     t.integer  "sale_id"
     t.integer  "gl_account_id"
+    t.float    "vat_amount"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -176,6 +180,11 @@ ActiveRecord::Schema.define(version: 20180608112640) do
     t.boolean  "payment"
     t.integer  "receipt_entry_id"
     t.integer  "gl_account_id"
+    t.integer  "vat_type"
+    t.integer  "bank_account_id"
+    t.float    "total_amount"
+    t.integer  "purchase_id"
+    t.integer  "sale_id"
   end
 
 end

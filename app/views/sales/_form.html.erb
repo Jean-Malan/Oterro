@@ -13,7 +13,7 @@
     </div>
   <% end %>
 <center>
-<div class= "card col-md-10">
+<div class= "card col-md-12">
   <div class="card-header card-header-info">
                                     <h4 class="card-title">Edit Invoice</h4>
                                     <p class="card-category"></p>
@@ -23,6 +23,7 @@
       <tr><center>
     <th>  <%= f.label :date %><br></th>
    <th> <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td></th>
+   
    <th></th>
    <th>  <%= f.label :customer_id %><br></th>
     <th> <%= f.collection_select(:contact_id, Contact.all, :id, :name, {:prompt => false},  class:"btn ml-auto")  %></th>
@@ -31,7 +32,9 @@
     <th>  <%= f.label :due_date %><br></th>
    <th> <%= f.date_field :due_date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td></th>
    <th></th>
-    <th>  <%=  f.select :sales_type, Sale.sales_types.keys, {}, class: 'btn btn-default pull-right'  %></th>
+     <th>  <%= f.label :invoice_number %><%=  f.text_field :invoice_number, class: 'form-control' %></th>
+    <th> <%= f.label :sales_type%> <%=  f.select :sales_type, Sale.sales_types.keys, {}, class: 'btn btn-default'   %></th>
+   </tr></center>
    </tr></center>
    <th></th>
   </div>
@@ -45,13 +48,14 @@
   <table class = "table">
     <thead>
     <tr>
-      <th class ="colspan-1"></th>
+      <th class ="col col-lg-1"></th>
+             <th class ="colspan-1">Product</th>
       <th class ="colspan-1">Description</th>
-       <th class ="colspan-1">Product</th>
       <th class ="colspan-1">Account</th>
-      <th class ="colspan-1">Quantity</th>
-      <th class ="colspan-1">Amount</th>
-      <th class ="colspan-1">Total</th>
+      <th class ="colspan-1">Vat</th>
+      <th class ="col col-lg-1">Quantity</th>
+      <th class ="col col-lg-2">Amount</th>
+      <th class ="col col-lg-2">Total</th>
     </tr>
   </thead>
     
@@ -78,6 +82,4 @@
   </div>
 <% end %>
  </center>
- 
- 
  

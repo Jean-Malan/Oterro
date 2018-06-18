@@ -16,6 +16,11 @@ class ReceiptEntriesController < ApplicationController
   def new
     @receipt_entry = ReceiptEntry.new
   end
+  
+  def invoice_entry
+    @receipt_entry = ReceiptEntry.new
+    @receipt_entry.transactions.build
+  end
 
   # GET /receipt_entries/1/edit
   def edit
@@ -69,6 +74,6 @@ class ReceiptEntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_entry_params
-      params.require(:receipt_entry).permit(:transaction_id, transactions_attributes: [:id, :date, :description, :amount, :reference, :bank_id, :gl_account_id, :account_id, :purchase_invoice_id, :sales_invoice_id, :contact_id, :vat_amount, :vat, :transaction_type, :payment_entry_id, :_destroy])
+      params.require(:receipt_entry).permit(:transaction_id, transactions_attributes: [:id, :date, :description, :amount, :bank_account_id, :total_amount, :sale_id, :reference, :bank_id, :vat_type, :gl_account_id, :account_id, :purchase_invoice_id, :sales_invoice_id, :contact_id, :vat_amount, :vat, :transaction_type, :payment_entry_id, :_destroy])
     end
 end

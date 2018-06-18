@@ -7,11 +7,39 @@ class SalesController < ApplicationController
     @sales = Sale.all
     @sale_entry = SalesEntry.all
   end
+  
+    def draft_index
+    @sales = Sale.all.where("sales_type =?", 1)
+    @sale_entry = SalesEntry.all
+  
+  end
+  
+    def partially_paid
+    @sales = Sale.all
+    @sale_entry = SalesEntry.all
+      @transactions = Transaction.all
+  end
+  
+    def paid
+    @sales = Sale.all
+    @sale_entry = SalesEntry.all
+     @transactions = Transaction.all
+  end
+  
+      def unpaid
+    @sales = Sale.all
+    @sale_entry = SalesEntry.all
+     @transactions = Transaction.all
+  end
+  
+  
+  
 
   # GET /sales/1
   # GET /sales/1.json
   def show
    @sale_entry = SalesEntry.all
+   @transactions = Transaction.all
   end
 
   # GET /sales/new
@@ -97,6 +125,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
-      params.require(:sale).permit(:id, :number, :title, :address, :date, :due_date, :vat_total, :amount, :notes, :customer_id, :account_type, :sales_type, :contact_id, :user_id, sales_entries_attributes: [ :id, :sale_id, :product_id, :description, :quantity, :price, :vat_type, :account_id, :total_price, :gl_account_id ])
+      params.require(:sale).permit(:id, :number, :title, :address, :date, :due_date, :vat_total, :amount, :notes, :customer_id, :account_type, :sales_type, :contact_id, :user_id, sales_entries_attributes: [ :id, :sale_id, :invoice_number, :product_id, :description, :vat_amount, :quantity, :price, :vat_type, :account_id, :total_price, :gl_account_id ])
     end
 end

@@ -13,8 +13,8 @@
    <p class="card-category"> Account balance:</p>
    <% @bank_total = 0 %>
     <h3 class="card-title"> <% @transactions.each do |transaction| %>
-                            <% if transaction.bank_id == @bank_account.id %>
-                            <% @bank_total += transaction.amount %>
+                            <% if transaction.bank_account_id == @bank_account.id %>
+                            <% @bank_total += transaction.total_amount.to_f %>
                              <% end %> 
                               <% end %> 
                               <%= @bank_total %></h3>
@@ -27,7 +27,7 @@
      </div>
      
 
-<%= link_to 'New Payments', new_payment_entry_path, class:'btn btn-warning' %><%= link_to 'New Receipts', new_receipt_entry_path, class:'btn btn-success' %>
+<%= link_to 'Add General Payment', new_payment_entry_path, class:'btn btn-warning' %> | <%= link_to 'Add Invoice Payments', payment_entries_invoice_entry_path, class:'btn btn-warning' %> | <%= link_to 'New General Receipts', new_receipt_entry_path, class:'btn btn-success' %> | <%= link_to 'New Invoice Receipts', receipt_entries_invoice_entry_path, class:'btn btn-success' %>
 
  <div class="card">
      
@@ -47,8 +47,8 @@
       <tbody>
       <tr>
         <% @transactions.each do |transaction| %>
-         <% if transaction.bank_id == @bank_account.id %>
-              <td><% if transaction.payment_entry_id %>
+         <% if transaction.bank_account_id == @bank_account.id %>
+              <td><% if transaction.total_amount < 0 %>
      <h2><strong><center><font color =" #EC971F">•</font></strong></center></h2>
      <% else %>
       <h2><strong><center><font color =" #47A44B">•</font></strong></center></h2>
@@ -57,8 +57,9 @@
           <td><div class ="table-color"><%= transaction.date %></div></td>
           <td><div class ="table-color"><%=  transaction.description %></div></td>
           <td><div class ="table-color"><%=  transaction.gl_account ? transaction.gl_account.name : "No account"  %></div></td>
-          <td><div class ="table-color"><%= link_to transaction.amount, edit_transaction_path(transaction) %></td>
-          <td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><div class ="table-color"><%= link_to transaction.total_amount ? transaction.total_amount.round(2) : ""  %></td>
+           <td><%= link_to 'Destroy', edit_transaction_path(transaction) %> | 
+               <%= link_to 'Edit', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
       
         <%end%>

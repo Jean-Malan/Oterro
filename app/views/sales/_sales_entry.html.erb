@@ -6,9 +6,10 @@
     
     
 
-    <td><%= f.text_field :product_id, label: false, class:"form-control" %></td>
+    <td><%= f.collection_select :product_id, Product.all, :id, :name, {:prompt => false},class:"btn" %></td>
      <td><%= f.text_field :description, label: false, class:"form-control" %></td>
     <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn" %></td>
+    <td style="width:  8.33%"> <%=f.select :vat_type, SalesEntry.vat_types.keys.map { |w| [w.humanize, w] },{:prompt => false},class:"btn" %></td>
     <td><%= f.text_field :quantity, label: false, class:"form-control" %></td>
     <td><%= f.text_field :price, label: false, class:"form-control" %></td>
     

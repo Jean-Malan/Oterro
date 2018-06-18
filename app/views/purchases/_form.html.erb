@@ -1,4 +1,4 @@
-<%= form_for(@purchase) do |f| %>
+<%= simple_form_for(@purchase) do |f| %>
   <% if @purchase.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
@@ -10,7 +10,7 @@
     </div>
   <% end %>
 <center>
-<div class= "card col-md-10">
+<div class= "card col-md-12">
   <div class="card-header card-header-info">
                                     <strong><h3 class="card-title">Edit Invoice</h3></strong>
                                     <p class="card-category"></p>
@@ -22,8 +22,8 @@
    <th> <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td></th>
    <th></th>
    <th>  <%= f.label :customer_id %><br></th>
-    <th> <%= f.collection_select(:contact_id, Contact.all, :id, :name, {:prompt => false},  class:"btn ml-auto")  %></th>
-
+    <th> <%= f.collection_select(:contact_id, Contact.all, :id, :name, {:prompt => false},  class: 'form-control')  %></th>
+    <th>  <%=  f.text_field :invoice_number, class: 'btn btn-default pull-right'  %></th>
     <th>  <%=  f.select :purchases_type, Purchase.purchases_types.keys, {}, class: 'btn btn-default pull-right'  %></th>
    </tr></center>
    <th></th>
@@ -41,7 +41,8 @@
       <th class ="colspan-1"></th>
        <th class ="colspan-1">Product</th>
       <th class ="colspan-1">Description</th>
-      <th class ="colspan-1">Account</th>
+      <th class ="col-md-0.1">Account</th>
+      <th class ="colspan-1">Vat</th>
       <th class ="colspan-1">Quantity</th>
       <th class ="colspan-1">Amount</th>
       <th class ="colspan-1">Total</th>

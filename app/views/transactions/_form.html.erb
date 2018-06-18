@@ -1,6 +1,6 @@
 
 
-  <center>
+
 <div class="form-fields">
 <%= simple_form_for(@transaction) do |f| %>
   <% if @transaction.errors.any? %>
@@ -14,10 +14,11 @@
       </ul>
     </div>
   <% end %>
-><div class="justify-content-md-center">
-  <div class="col-lg-6 col-md-12">
+  <center>
+
+  <div class="col-lg-6 ">
   <div class = "card">
-   <div class="card-header card-header-info">
+   <div class="card-header card-header-success">
                                     <h4 class="card-title">New Transaction</h4>
                                     <p class="card-category"></p>
                                      </div> 
@@ -25,10 +26,7 @@
   <form class="needs-validation" novalidate>
  
     <div class="btn-group">
-  <div class="col-md-18">
-   <center id="input"> <%= f.label :date %></center> 
-   <center> <%= f.date_select :date %></center> 
-    </div>
+   <center> <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %></center> 
     </div>
     <br>
     
@@ -37,7 +35,7 @@
      <div class="col-md-18">
     <center><%= f.label :account_id %><br></center> 
 
-     <center> <%= collection_select(:transaction, :account_id, GlAccount.all, :id, :name, prompt: true, class: "dropdown-menu") %></center> 
+     <center><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn" %></center> 
  
         </div>
     </div>
@@ -46,7 +44,7 @@
     <div class="btn-group">
      <div class="col-md-18">
     <center><%= f.label :bank_id %><br></center> 
-     <center>  <%= collection_select(:transaction, :bank_id, BankAccount.all, :id, :name, prompt: true, class: "dropdown-menu") %></center>  
+     <center>  <%= f.collection_select :bank_account_id, BankAccount.all, :id, :name, {:prompt => false},class:"btn" %></center>  
         </div>
     </div>
     <br>
@@ -58,9 +56,21 @@
     </div>
     </div>
     <br>
+    
+     <div class="btn-group">
+     <div class="col-md-18">
+  <center>  <%= f.label :vat_type %><br></center> 
+   <center><%= f.input :vat_type, as: :select, label: " '", collection: Transaction.vat_types.map { |key, value| [key.humanize, key] }%></center> 
+    </div>
+    </div>
+    <br>
   
-    <center> <%= f.label :vat %>   </center> 
-   <center> <%= f.check_box :vat %>  </center>
+    <div class="btn-group">
+     <div class="col-md-18">
+   <center> <%= @transaction.vat_amount %></br></center> 
+     </div>
+    </div>
+     <br>
   
 
       <div class="btn-group">
@@ -75,8 +85,7 @@
 
     </div>
  <div class="actions">
-   <%= f.submit 'Add Transaction', class: 'btn btn-info'%>
-   <%= f.submit "Add and New Transaction", formaction: new_transaction_path %>
+   <%= f.submit 'Add Transaction', class: 'btn btn-success'%>
 <% end %>  
 <%= link_to 'Back', bank_accounts_path, class: "btn btn-default" %>
 </div>

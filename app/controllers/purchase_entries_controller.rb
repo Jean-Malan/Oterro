@@ -69,6 +69,6 @@ class PurchaseEntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_entry_params
-      params.require(:purchase_entry).permit(:product_id, :description, :account_id, :quantity, :price, :total_price, :purchase_id, :user_id, :gl_account_id)
+      params.require(:purchase_entry).permit(:product_id, :description, :account_id, :quantity, :price, :total_price, :purchase_id, :user_id, :gl_account_id, :vat_type, :vat_amount)
     end
 end

@@ -2,9 +2,8 @@
     <p class= 'alert alert-success'><%= notice %></p>
 <% end %>
 </br>
-<%= link_to 'Invoice', sales_invoice_path,  class: "btn btn-success" %> | <%= link_to "Quote", sales_quote_path,  class: "btn btn-warning" %> | <%= link_to 'Draft', sales_draft_path,  class: "btn btn-danger" %>
+<%= link_to 'New Invoice', sales_invoice_path,  class: "btn btn-primary col-md-4" %> <%= link_to 'Drafts', sales_draft_index_path,  class: "btn btn-default pull-right" %><%= link_to 'Outstanding', sales_paid_path,  class: "btn btn-danger pull-right" %><%= link_to 'Partially Paid', sales_partially_paid_path,  class: "btn btn-warning pull-right" %><%= link_to 'Paid', sales_paid_path,  class: "btn btn-success pull-right" %><%= link_to 'All', sales_path,  class: "btn btn-info pull-right" %>  
 
-  <%= link_to 'new', new_sale_path,  class: "btn btn-info col-md-3 pull-right" %> 
 
 <br><br>
 <div class= "card">
@@ -26,15 +25,7 @@
         <td><%= link_to sale.date, sale_path(sale) %></td>
         <td><%= sale.contact_id ? sale.contact.name : 'No customer'  %></td>
         <td><%= "Inv #{sale.id}" %></td>
-        
-        
-                <% sale.amount  = 0 %>
-        <% @sale_entry.each do |entry| %>
-        <% if sale.id == entry.sale_id %>
-        <% sale.amount += entry.total_price.to_i %>
-          <% end %>
-           <% end %>
-      <td><%= sale.amount %></td>
+      <td><%= sale.amount ? sale.amount.to_f.round(2) : "0"%></td>
       
       
              <td>    <% if sale.sales_type == 'estimate' %>

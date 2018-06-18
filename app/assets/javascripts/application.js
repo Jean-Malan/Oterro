@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require_tree .
 
+// ------------------------- Nested fields 
+
 $( "#other" ).click(function() {
   $( ".target" ).change();
 });
@@ -37,7 +39,20 @@ $( "#other" ).click(function() {
   
 });
 
+// Invoice Application 
 
+function findTotal(){
+    var qty = document.getElementById('qty');
+     var price = document.getElementById('price');
+     var tot=0;
+     tot = qty * price
+     
+     return tot
+     
+}
+    
+    
+    
 
 if ("undefined" == typeof jQuery) throw new Error("Bootstrap's JavaScript requires jQuery. jQuery must be included before Bootstrap's JavaScript.");
 ! function(t) {
