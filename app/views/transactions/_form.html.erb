@@ -15,8 +15,8 @@
     </div>
   <% end %>
   <center>
-
-  <div class="col-lg-6 ">
+<center><div class="justify-content-md-center">
+  <div class="col-lg-12 col-md-12">
   <div class = "card">
    <div class="card-header card-header-success">
                                     <h4 class="card-title">New Transaction</h4>
@@ -24,62 +24,40 @@
                                      </div> 
     <div class="card-text">
   <form class="needs-validation" novalidate>
- 
-    <div class="btn-group">
-   <center> <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %></center> 
-    </div>
-    <br>
-    
-   
-    <div class="btn-group">
-     <div class="col-md-18">
-    <center><%= f.label :account_id %><br></center> 
+  <table class = "table">
+    <thead>
+    <tr>
+      <th class ="colspan-1"></th>
+      <th class ="colspan-1">Date</th>
+       <th class ="colspan-1">Description</th>
+      <th class ="colspan-1">Reference</th>
+       <th class ="colspan-1">Bank</th>
+      <th class ="colspan-1">Account</th>
+        <th class ="col-md-1">Vat</th>
+      <th class ="colspan-1">Amount</th>
+    </tr>
+  </thead>
+  
+  
+  <tr>
+    <td>
+         
+              <%= f.hidden_field :_destroy %>
+              <%= link_to "remove", '#', class: "remove_record" %>
 
-     <center><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn" %></center> 
- 
-        </div>
-    </div>
-    <br>
-    <br>
-    <div class="btn-group">
-     <div class="col-md-18">
-    <center><%= f.label :bank_id %><br></center> 
-     <center>  <%= f.collection_select :bank_account_id, BankAccount.all, :id, :name, {:prompt => false},class:"btn" %></center>  
-        </div>
-    </div>
-    <br>
+    </td>
+    <td>
+    <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td>
+    <td><%= f.text_field :description, label: false, class: 'form-control input'  %></td>
+        <td><%= f.text_field :reference, label: false, class: 'form-control input'  %></td>
+        <td>  <%= f.collection_select :bank_account_id, BankAccount.all, :id, :name, {:prompt => false},class:"btn" %></td>
+        <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn" %></td>
+        <td><%= f.input :vat_type, as: :select, label: " '", collection: Transaction.vat_types.map { |key, value| [key.humanize, key] }, class: "btn" %></td>
+        <td> <%= f.text_field :total_amount, class: 'form-control input'  %></td>
+        <%  f.check_box :payment, :value => true %>
      
-          <div class="btn-group">
-     <div class="col-md-18">
-  <center>  <%= f.label :description %><br></center> 
-   <center> <%= f.text_field :description, class: 'form-control input'  %></center> 
-    </div>
-    </div>
-    <br>
-    
-     <div class="btn-group">
-     <div class="col-md-18">
-  <center>  <%= f.label :vat_type %><br></center> 
-   <center><%= f.input :vat_type, as: :select, label: " '", collection: Transaction.vat_types.map { |key, value| [key.humanize, key] }%></center> 
-    </div>
-    </div>
-    <br>
-  
-    <div class="btn-group">
-     <div class="col-md-18">
-   <center> <%= @transaction.vat_amount %></br></center> 
-     </div>
-    </div>
-     <br>
-  
-
-      <div class="btn-group">
-     <div class="col-md-18">
-  <center>  <%= f.label :amount %><br></center> 
-   <center> <%= f.text_field :amount, class: 'form-control input'  %></br></center> 
-     </div>
-    </div>
-    
+    </table>
+</div>
 
 
 

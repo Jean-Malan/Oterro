@@ -26,18 +26,27 @@
     </tr>
   </thead>
   
+  
+  <tr>
+    <td>
+         
+              <%= f.hidden_field :_destroy %>
+              <%= link_to "remove", '#', class: "remove_record" %>
 
- <tbody class ="fields">
-    <%= f.fields_for :transactions do |builder| %>
-    <%= render 'transaction', f: builder %>
- 
-    <% end %>
-  </tbody>
-  </table>
+    </td>
+    <td>
+    <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td>
+    <td><%= f.text_field :description, label: false, class: 'form-control input'  %></td>
+        <td><%= f.text_field :reference, label: false, class: 'form-control input'  %></td>
+        <td>  <%= f.collection_select :bank_account_id, BankAccount.all, :id, :name, {:prompt => false},class:"btn" %></td>
+        <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn" %></td>
+        <td><%= f.input :vat_type, as: :select, label: " '", collection: Transaction.vat_types.map { |key, value| [key.humanize, key] }, class: "btn" %></td>
+        <td> <%= f.text_field :total_amount, class: 'form-control input'  %></td>
+        <%  f.check_box :payment, :value => true %>
+     
+    </table>
+</div>
 
-<div class="actions">
-   
-       <%= link_to_add_row('Add General Payment', f, :transactions, class: 'btn btn-warning') %>
     </br></br>
    <%= f.submit 'Add Transaction', class: 'btn btn-info'%>
 

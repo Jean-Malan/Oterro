@@ -56,10 +56,16 @@
       
           <td><div class ="table-color"><%= transaction.date %></div></td>
           <td><div class ="table-color"><%=  transaction.description %></div></td>
-          <td><div class ="table-color"><%=  transaction.gl_account ? transaction.gl_account.name : "No account"  %></div></td>
+         <td> <% if  transaction.gl_account != nil %>
+                <div class ="table-color"><%= transaction.gl_account.name %>
+          <% else %>
+
+               <%= transaction.contact_id ? transaction.contact_id.name.to_s : "" %></div></td>
+      
+                <% end %>
           <td><div class ="table-color"><%= link_to transaction.total_amount ? transaction.total_amount.round(2) : ""  %></td>
-           <td><%= link_to 'Destroy', edit_transaction_path(transaction) %> | 
-               <%= link_to 'Edit', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+           <td><%= link_to 'Edit', edit_transaction_path(transaction) %> | 
+               <%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
       
         <%end%>

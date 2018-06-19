@@ -2,7 +2,7 @@
     <p class= 'alert alert-success'><%= notice %></p>
 <% end %>
 </br>
-<%= link_to 'New Invoice', sales_invoice_path,  class: "btn btn-primary col-md-4" %> <%= link_to 'Drafts', sales_draft_index_path,  class: "btn btn-default pull-right" %><%= link_to 'Outstanding', sales_paid_path,  class: "btn btn-danger pull-right" %><%= link_to 'Partially Paid', sales_partially_paid_path,  class: "btn btn-warning pull-right" %><%= link_to 'Paid', sales_paid_path,  class: "btn btn-success pull-right" %><%= link_to 'All', sales_path,  class: "btn btn-info pull-right" %>  
+<%= link_to 'New Invoice', sales_invoice_path,  class: "btn btn-primary col-md-4" %> <%= link_to 'Drafts', sales_draft_index_path,  class: "btn btn-default pull-right" %><%= link_to 'Outstanding', sales_unpaid_path,  class: "btn btn-danger pull-right" %><%= link_to 'Partially Paid', sales_partially_paid_path,  class: "btn btn-warning pull-right" %><%= link_to 'Paid', sales_paid_path,  class: "btn btn-success pull-right" %><%= link_to 'All', sales_path,  class: "btn btn-info pull-right" %>  
 
 
 <br><br>
@@ -11,7 +11,7 @@
   <thead>
     <tr>
       <th>Date</th>
-      <th>Supplier</th>
+      <th>Customer</th>
       <th>Description</th>
       <th>Amount</th>
       <th>Type</th>
@@ -24,7 +24,7 @@
       <tr>
         <td><%= link_to sale.date, sale_path(sale) %></td>
         <td><%= sale.contact_id ? sale.contact.name : 'No customer'  %></td>
-        <td><%= "Inv #{sale.id}" %></td>
+        <td><%= "Inv #{sale.invoice_number}" %></td>
       <td><%= sale.amount ? sale.amount.to_f.round(2) : "0"%></td>
       
       

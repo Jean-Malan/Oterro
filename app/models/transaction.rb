@@ -1,11 +1,13 @@
 class Transaction < ActiveRecord::Base
     before_save :format_values, :format_vat, :format_rounding
+    after_save :update_sales, :update_purchases
     
     belongs_to :gl_account
     belongs_to :payment_entry
     belongs_to :receipt_entry
     belongs_to :purchase
     belongs_to :sale
+    belongs_to :contact
     
     
     enum transaction_type: {
@@ -24,11 +26,18 @@ class Transaction < ActiveRecord::Base
 
   private
   
-  def update_sales
-   if self.sale_id != 0
-    transaction.sale.amount -= self.total_amount
-   end
+  
+def update_sales
+  if sale.present?
+  sale.update_balance
+ end
+end
+
+def update_purchases
+  if purchase.present?
+  purchase.update_balance
   end
+end
    
 
   def format_values

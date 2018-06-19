@@ -21,6 +21,7 @@
    <table class = "table">
     <thead>
       <tr><center>
+           <%= f.hidden_field :balance, :value => 0%>
     <th>  <%= f.label :date %><br></th>
    <th> <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td></th>
    

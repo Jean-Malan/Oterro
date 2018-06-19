@@ -1,5 +1,5 @@
 class Sale < ActiveRecord::Base
-      before_save :journal_params
+      before_save :journal_params, :journal_params
   
     has_many :transactions
     has_many :sales_entries
@@ -20,6 +20,15 @@ class Sale < ActiveRecord::Base
  
   }
   
+ def set_balance
+    
+   self.balance = 0.00
+    
+ end
+  
+  def update_balance
+  update(balance: transactions.sum(:total_amount))
+end
   
  def journal_params
   # Use find_all instead of where since you might be dealing with unpersisted records

@@ -48,6 +48,7 @@ class SalesController < ApplicationController
       2.times do
     @sale.sales_entries.build
   end
+   @sale.balance = 0
   end
   
    def invoice
@@ -55,6 +56,7 @@ class SalesController < ApplicationController
      2.times do
     @sale.sales_entries.build
 end
+ @sale.balance = 0
 end
 
   
@@ -63,6 +65,7 @@ end
      2.times do
     @sale.sales_entries.build
 end
+ @sale.balance = 0
 end
   
     def draft
@@ -70,6 +73,7 @@ end
     2.times do
     @sale.sales_entries.build
   end
+   @sale.balance = 0
   end
 
   # GET /sales/1/edit
@@ -81,7 +85,7 @@ end
   # POST /sales.json
   def create
     @sale = Sale.new(sale_params)
-
+    @sale.balance = 0
     respond_to do |format|
       if @sale.save
         format.html { redirect_to @sale, notice: 'Sale was successfully created.' }
@@ -125,6 +129,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
-      params.require(:sale).permit(:id, :number, :title, :address, :date, :due_date, :vat_total, :amount, :notes, :customer_id, :account_type, :sales_type, :contact_id, :user_id, sales_entries_attributes: [ :id, :sale_id, :invoice_number, :product_id, :description, :vat_amount, :quantity, :price, :vat_type, :account_id, :total_price, :gl_account_id ])
+      params.require(:sale).permit(:id, :number, :title, :address, :date, :due_date, :vat_total, :balance, :amount, :notes, :customer_id, :account_type, :sales_type, :contact_id, :user_id, sales_entries_attributes: [ :id, :sale_id, :invoice_number, :product_id, :description, :vat_amount, :quantity, :price, :vat_type, :account_id, :total_price, :gl_account_id ])
     end
 end

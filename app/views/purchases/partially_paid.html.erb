@@ -2,7 +2,7 @@
     <p class= 'alert alert-success'><%= notice %></p>
 <% end %>
 </br>
-<%= link_to 'New Invoice', purchases_invoice_path,  class: "btn btn-primary col-md-4" %> <%= link_to 'Drafts', purchases_draft_index_path,  class: "btn btn-default pull-right" %><%= link_to 'Outstanding', purchases_paid_path,  class: "btn btn-danger pull-right" %><%= link_to 'Partially Paid', purchases_partially_paid_path,  class: "btn btn-warning pull-right" %><%= link_to 'Paid', purchases_paid_path,  class: "btn btn-success pull-right" %><%= link_to 'All', purchases_path,  class: "btn btn-info pull-right" %>  
+<%= link_to 'New Invoice', purchases_invoice_path,  class: "btn btn-primary col-md-4" %> <%= link_to 'Drafts', purchases_draft_index_path,  class: "btn btn-default pull-right" %><%= link_to 'Outstanding', purchases_unpaid_path,  class: "btn btn-danger pull-right" %><%= link_to 'Partially Paid', purchases_partially_paid_path,  class: "btn btn-warning pull-right" %><%= link_to 'Paid', purchases_paid_path,  class: "btn btn-success pull-right" %><%= link_to 'All', purchases_path,  class: "btn btn-info pull-right" %>  
 
 
 <br><br>
@@ -21,16 +21,15 @@
   </thead>
 
   <tbody>
-    <% @transactions.each do |transactions| %>
-    <% if transactions.purchase_id != nil &&  transactions.total_amount * -1 < transactions.purchase.amount &&  transactions.total_amount * -1  > 0  %>
+    <% @purchases.each do |purchase| %>
+    <% if purchase.balance.to_f * -1 < purchase.amount.to_f && purchase.balance != nil%>
       <tr>
-        <td><%= link_to transactions.purchase.date,  purchase_path(transactions.purchase)%></td>
-        <td><%= transactions.purchase.contact_id ? transactions.purchase.contact.name : 'No customer'  %></td>
-        <td><%= "Inv #{transactions.purchase.id}" %></td>
-           <td><%= transactions.purchase.amount %></td>
-              <td> <%= transactions.total_amount %> </td>
-              <td> <%= transactions.purchase.amount + transactions.total_amount %> </td>
-        
+        <td><%= link_to purchase.date,  purchase_path(purchase)%></td>
+        <td><%= purchase.contact_id ? purchase.contact.name : 'No customer'  %></td>
+        <td><%= "Inv #{purchase.id}" %></td>
+             <td><%= purchase.amount %></td>
+              <td> <%= purchase.balance %> </td>
+              <td> <%= purchase.amount + purchase.balance %> </td>
              <% end %>
               <% end %>
       </td>   

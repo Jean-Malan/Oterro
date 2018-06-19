@@ -49,10 +49,10 @@
       <th>Description</th>
        <th>Product</th>
       <th>Account</th>
-      <th>Vat</th>
       <th>Quantity</th>
-      <th>Amount</th>
-      <th>Total</th>
+       <th>Vat</th>
+       <th>Net Amount</th>
+        <th>Total</th>
 
 
   </thead>
@@ -62,22 +62,15 @@
             <% if entry.purchase_id == @purchase.id %>
 
                <td>  <%= entry.description %></td>
-               <td> <%= entry.product_id ? entry.product_id : ' ' %></td>
+                <td> <%= entry.product_id ? entry.product.name : ' ' %></td>
                <td> <%= entry.gl_account ? entry.gl_account.name : ' ' %></td>
-                  <td> <%= entry.vat_amount %></td>
-               <td> <%= entry.quantity %></td>
-               <td> <%= entry.price %></td>
-                  <% if entry.quantity.to_i > 0 %>
-                     <% @total = 0 %>
-                     <% @total += (entry.quantity.to_f * entry.price.to_f ) + entry.vat_amount.to_f %>
-                     <td><strong><%= @total %></strong></td>
-                     </tr>
-                 <% else %>
-                     <td><strong><%= entry.price %></strong></td>
+                 <td> <%= entry.quantity %></td>
+                  <td> <%= entry.vat_amount.round(2) %></td>
+                   <td> <%= entry.net_price.round(2) %></td>
+                     <td><strong><%= entry.price.round(2)  %></strong></td>
               </tr>
                 <% end %>
-        <% end %>
-       <% end %>
+                    <% end %>
    </table>
    
    <h3 class='pull-left'>Payments</h3>
@@ -129,19 +122,8 @@
         <td></td>
         <td></td>
          <td></td>
-              <% @invoice_total = 0 %>
-              <% @purchase_entry.each do |entry| %>
-            <% if entry.purchase_id == @purchase.id %>
-            <% if entry.quantity.to_i < 0 %>
-            <% @invoice_total += entry.price.to_i  %>
-            <% else %>
-            <% @invoice_total += (entry.price.to_f * entry.quantity.to_f) + entry.vat_amount.to_f %>
-            <% if @invoice_total != 0 %>
-             <% end %>
-             <% end %>
-              <% end %>
-             <% end %>
-             <td><strong><%= @invoice_total + @purchase.transactions.sum(:total_amount) %> </strong></td>
+             
+             <td><strong><%= @purchase.amount.to_f + @purchase.balance.to_f %> </strong></td>
        
             
           </tbody>

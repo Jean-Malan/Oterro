@@ -6,9 +6,9 @@ class Purchase < ActiveRecord::Base
     belongs_to :account_id
     belongs_to :gl_accounts
     has_many :transactions
-   
+    belongs_to :gl_account
     
-      accepts_nested_attributes_for :purchase_entries,
+    accepts_nested_attributes_for :purchase_entries,
                                   allow_destroy: true
     
     enum purchases_type: {
@@ -17,15 +17,18 @@ class Purchase < ActiveRecord::Base
  
   }
   
-  
+  def update_balance
+    update(balance: transactions.sum(:total_price))
+  end
+
   def journal_params
-  # Use find_all instead of where since you might be dealing with unpersisted records
-  self.amount  = purchase_entries
-                  .find_all(&:price?)
-                  .sum { |journal_entry| journal_entry.total_price }
- 
-  
+      self.amount  = purchase_entries
+                      .find_all(&:price?)
+                      .sum { |journal_entry| journal_entry.price * journal_entry.quantity  }
+                      
+     self.vat_amount = purchase_entries
+                      .find_all(&:vat_amount?)
+                      .sum { |journal_entry| journal_entry.vat_amount * journal_entry.quantity }
   end
   
-    
 end

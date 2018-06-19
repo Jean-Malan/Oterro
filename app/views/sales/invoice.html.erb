@@ -13,41 +13,36 @@
     </div>
   <% end %>
 <center>
+    </br>
 <div class= "card col-md-12">
-  <div class="card-header card-header-success">
-                                    <h4 class="card-title">Invoice</h4>
+  <div class="card-header card-header-info">
+                                    <h4 class="card-title">Sales Invoice</h4>
                                     <p class="card-category"></p>
                                      </div> 
                                   
    <table class = "table">
     <thead>
-      <tr><center>
-    <th>  <%= f.label :date %><br></th>
-   <th> <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td></th>
-   <th></th>
-   <th>  <%= f.label :customer_id %><br></th>
+      <tr>
+    <th>  <%= f.label :date %></th>
+   <th> <%= f.date_field :date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </th>
+    <th>  <%= f.label :due_date %></th>
+    <th> <%= f.date_field :due_date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </th>
+           <th>  <%= f.label :customer_id %></th>
     <th>  <%=f.collection_select(:contact_id, Contact.all, :id, :name, {:prompt => false},  class:"btn ml-auto") %></th>
-
-     <tr><center>
-   <tr><center>
-    <th>  <%= f.label :due_date %><br></th>
-   <th> <%= f.date_field :due_date, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %> </td></th>
-     <th>  <%= f.label :invoice_entry %><%=  f.text_field :invoice_number, class: 'btn btn-default pull-right'  %></th>
+    </tr>
+    <tr>
+     <th>  <%= f.label :invoice_number %></th>
+     <th><%=  f.text_field :invoice_number, class: 'form-control', placeholder: 'Inv: ***'  %></th>
+          <th>  <%= f.label :sales_type %></th>
     <th>  <%=  f.select :sales_type, Sale.sales_types.keys, {}, class: 'btn btn-default'   %></th>
    </tr></center>
-   </tr></center>
-   <th></th></th>
-    <th> 
-               
-        </div></th>
-   </tr></center>
-   <th></th>
   </div>
  </div>
-
-</div>
-  </br></br></br>
-  
+ </thead>
+ </table>
+  </div>
+  </br></br>
+ 
  
 <div class= "card">
   <table class = "table">
@@ -75,14 +70,14 @@
   </tbody>
   
   </table>
-  <%= link_to_add_row('Add line', f, :sales_entries, class: 'btn btn-defuault') %>
-  </br> </br>
+  <%= link_to_add_row('Add line', f, :sales_entries, class: 'btn btn-info') %>
+  </br></br>
    <%= f.text_area :notes, class: 'form-control', placeholder: 'Notes' %> 
   </div>
   <div class="actions">
 
     </br></br>
-     <%= f.submit 'Create Invoice', :class => 'btn btn-success' %> | <%= link_to 'Back', sales_path, class:"btn btn-default" %>
+     <%= f.submit 'Create Invoice', :class => 'btn btn-info' %> | <%= link_to 'Back', sales_path, class:"btn btn-default" %>
 
   </div>
 <% end %>

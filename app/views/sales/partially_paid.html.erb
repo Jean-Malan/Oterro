@@ -2,7 +2,7 @@
     <p class= 'alert alert-success'><%= notice %></p>
 <% end %>
 </br>
-<%= link_to 'New Invoice', sales_invoice_path,  class: "btn btn-primary col-md-4" %> <%= link_to 'Drafts', sales_draft_index_path,  class: "btn btn-default pull-right" %><%= link_to 'Outstanding', sales_paid_path,  class: "btn btn-danger pull-right" %><%= link_to 'Partially Paid', sales_partially_paid_path,  class: "btn btn-warning pull-right" %><%= link_to 'Paid', sales_paid_path,  class: "btn btn-success pull-right" %><%= link_to 'All', sales_path,  class: "btn btn-info pull-right" %>  
+<%= link_to 'New Invoice', sales_invoice_path,  class: "btn btn-primary col-md-4" %> <%= link_to 'Drafts', sales_draft_index_path,  class: "btn btn-default pull-right" %><%= link_to 'Outstanding', sales_unpaid_path,  class: "btn btn-danger pull-right" %><%= link_to 'Partially Paid', sales_partially_paid_path,  class: "btn btn-warning pull-right" %><%= link_to 'Paid', sales_paid_path,  class: "btn btn-success pull-right" %><%= link_to 'All', sales_path,  class: "btn btn-info pull-right" %>  
 
 
 <br><br>
@@ -22,15 +22,15 @@
 
   <tbody>
    <tbody>
-    <% @transactions.each do |transactions| %>
-    <% if transactions.sale_id != nil &&  transactions.total_amount < transactions.sale.amount &&  transactions.total_amount  > 0  %>
+    <% @sales.each do |sale| %>
+    <% if sale.balance != nil  && sale.balance.to_f < sale.amount.to_f %>
       <tr>
-        <td><%= link_to transactions.sale.date,  sale_path(transactions.sale)%></td>
-        <td><%= transactions.sale.contact_id ? transactions.sale.contact.name : 'No customer'  %></td>
-        <td><%= "Inv #{transactions.sale.id}" %></td>
-           <td><%= transactions.sale.amount %></td>
-              <td> <%= transactions.total_amount %> </td>
-              <td> <%= transactions.sale.amount.round(2) + transactions.total_amount.round(2) %> </td>
+        <td><%= link_to sale.date,  sale_path(sale)%></td>
+        <td><%= sale.contact_id ? sale.contact.name : 'No customer'  %></td>
+        <td><%= "Inv #{sale.id}" %></td>
+           <td><%= sale.amount %></td>
+              <td> <%= sale.balance %> </td>
+              <td> <%= sale.amount.to_f - sale.balance.to_f %> </td>
         
              <% end %>
               <% end %>

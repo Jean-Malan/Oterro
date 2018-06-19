@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180614090932) do
+ActiveRecord::Schema.define(version: 20180618093039) do
 
   create_table "bank_accounts", force: :cascade do |t|
     t.integer  "code"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20180614090932) do
     t.string   "transaction_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "email"
   end
 
   create_table "gl_accounts", force: :cascade do |t|
@@ -105,6 +106,7 @@ ActiveRecord::Schema.define(version: 20180614090932) do
     t.integer  "gl_account_id"
     t.integer  "vat_type",      default: 0
     t.float    "vat_amount"
+    t.float    "net_price"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -118,6 +120,8 @@ ActiveRecord::Schema.define(version: 20180614090932) do
     t.integer  "puchase_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.float    "balance"
+    t.float    "vat_amount"
   end
 
   create_table "receipt_entries", force: :cascade do |t|
@@ -144,6 +148,7 @@ ActiveRecord::Schema.define(version: 20180614090932) do
     t.integer  "contact_id"
     t.integer  "sales_type"
     t.integer  "invoice_number"
+    t.float    "balance"
   end
 
   create_table "sales_entries", force: :cascade do |t|

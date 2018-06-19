@@ -18,6 +18,12 @@ class ReportController < ApplicationController
   end
 
   def trial_balance
+
+     @gl_accounts = GlAccount.all
+      @transactions = Transaction.all
+      @sales = Sale.all
+      @purchases = Purchase.all
+      @bank_account = BankAccount.all
   end
 
   def general_ledger

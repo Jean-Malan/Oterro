@@ -1,2 +1,27 @@
-<h1>Report#trial_balance</h1>
-<p>Find me in app/views/report/trial_balance.html.erb</p>
+
+
+<div class='card'>
+    <table class='class'>
+        
+        <thead>
+        <th>Account</th> 
+        <th></th>    
+        <th>Balance</th>    
+            
+        </thead>
+ <tbody>
+
+   <% @gl_accounts.each do |account| %>
+         
+      <tr>
+        <td> <%= account.code %> - <%= account.name %></td>
+        <td> <%= account.name %> </td>
+        <% @total = 0 %>
+         <td>  <%= @total += account.transactions.sum(:amount).round(2) + account.journal_entries.sum(:amount).round(2) + account.sales_entries.sum(:price).round(2) +  account.purchase_entries.sum(:price).round(2) %> </td> 
+
+     <% end %>
+
+      </tr>
+  </tbody>
+  </table>
+  </div>

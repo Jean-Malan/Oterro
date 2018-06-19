@@ -5578,7 +5578,9 @@ tbody.collapse.show {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
-  padding: 1.25rem; }
+  padding: 1.25rem; 
+  overflow: scroll;
+}
 
 .card-title {
   margin-bottom: 0.75rem; }
@@ -10490,7 +10492,8 @@ button:focus {
   .card .card-body + .card-footer {
     padding-top: 0rem;
     border: 0;
-    border-radius: 6px; }
+    border-radius: 6px;
+    overflow: scroll;}
   .card .card-footer {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -10678,7 +10681,8 @@ button:focus {
     top: 5px; }
   .card[class*="bg-"],
   .card[class*="bg-"] .card-body {
-    border-radius: 6px; }
+    border-radius: 6px;
+    overflow: scroll;}
     .card[class*="bg-"] h1 small,
     .card[class*="bg-"] h2 small,
     .card[class*="bg-"] h3 small,
@@ -10709,7 +10713,8 @@ button:focus {
       color: #999999; }
   .card-plain .card-body {
     padding-left: 5px;
-    padding-right: 5px; }
+    padding-right: 5px;
+    overflow: scroll}
   .card-plain .card-header-image {
     margin: 0 !important;
     border-radius: 6px; }
@@ -10784,7 +10789,8 @@ button:focus {
     margin-bottom: 3px; }
   .card .card-body {
     padding: 0.9375rem 20px;
-    position: relative; }
+    position: relative;
+    overflow: scroll}
   .card .card-header {
     z-index: 3 !important; }
     .card .card-header .card-category {
@@ -10816,7 +10822,8 @@ button:focus {
     margin-top: -20px; }
   .card.card-chart .card-footer i:nth-child(1n+2) {
     width: 18px;
-    text-align: center; }
+    text-align: center;
+    overflow: scroll;}
   .card.card-chart .card-category {
     margin: 0; }
   .card .card-body + .card-footer,
@@ -10825,6 +10832,7 @@ button:focus {
     padding-top: 10px;
     margin: 0 15px 10px;
     border-radius: 0;
+    overflow: scroll;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
@@ -10959,7 +10967,8 @@ button:focus {
 
 .card-chart .card-body + .card-footer,
 .card-product .card-body + .card-footer {
-  border-top: 1px solid #eee; }
+  border-top: 1px solid #eee;
+  overflow: scroll; }
 
 .card-product .price {
   color: inherit; }
@@ -15373,7 +15382,8 @@ label {
 
 .section-signup .card-signup .card-body .input-group {
   padding-bottom: 7px;
-  margin: 27px 0 0 0; }
+  margin: 27px 0 0 0;
+  overflow: scroll; }
 
 .offline-doc .page-header,
 .offline-free-doc .page-header {
@@ -15881,7 +15891,8 @@ a[aria-expanded="true"] .caret,
     margin-top: -40px;
     margin-bottom: 20px; }
   .login-page .card-login .card-body {
-    padding: 0px 30px 0px 10px; }
+    padding: 0px 30px 0px 10px;
+    overflow: scroll}
     .login-page .card-login .card-body .input-group .input-group-text {
       padding: 15px 15px 0 15px; }
     .login-page .card-login .card-body .input-group .form-control {
@@ -16167,7 +16178,8 @@ a[aria-expanded="true"] .caret,
   .carousel .card .card-body {
     max-width: 340px;
     margin: 0 auto;
-    min-height: 400px; }
+    min-height: 400px;
+    overflow: scroll;}
   .navbar-collapse {
     position: fixed;
     display: block;
@@ -17577,3 +17589,4 @@ Copyright (c) 2015 Daniel Eden
     opacity: 0;
   }
 }
+

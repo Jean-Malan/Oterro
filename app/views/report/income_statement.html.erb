@@ -4,11 +4,7 @@
 </br>
 
 <center>
-<%= search_form_for @q do |f| %>
-  <%= f.label :name_cont %>
-  <%= f.search_field :name_cont %>
-    <%= f.submit %>
-  <% end %>
+
   
   
   <div class= "card col-md-9">
@@ -37,7 +33,7 @@
         <td> <%= account.code %> - <%= account.name %></td>
         <td> </td>
         <% @sales_income = 0 %>
-         <% @sales_income += account.transactions.sum(:amount).round(2) + account.journal_entries.sum(:amount).round(2)  %>
+         <% @sales_income += account.transactions.sum(:amount).round(2) + account.journal_entries.sum(:amount).round(2) + account.sales_entries.sum(:price).round(2) %>
          <% @sales.each do |sale| %>
          <% if sale.sales_type == 'invoice' %> 
                <% @sales_income += sale.sales_entries.sum(:total_price) %>
