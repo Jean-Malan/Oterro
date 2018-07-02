@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'bootstrap-sass'
 gem "font-awesome-rails"
 gem "responders"
+gem 'ransack'
 gem 'simple_form'
 
 gem 'roo'
