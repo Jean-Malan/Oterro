@@ -18,7 +18,7 @@ class Purchase < ActiveRecord::Base
   }
   
   def update_balance
-    update(balance: transactions.sum(:total_price))
+    update(balance: transactions.sum(:total_amount))
   end
 
   def journal_params

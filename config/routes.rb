@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
- 
+
+  get 'bank_accounts/unallocated'
   get 'purchases/paid'
   get 'purchases/draft_index'
   get 'purchases/unpaid'
@@ -35,5 +36,18 @@ Rails.application.routes.draw do
   get 'index/home'
  
   root 'index#home'
+  
+    resources :transactions do 
+    collection { post :import }
+  end
+  resources :bank_accounts do 
+    collection { post :import }
+  end
+  
+   resources :transactions do
+    collection do
+      delete 'destroy_multiple'
+    end
+  end
  
 end

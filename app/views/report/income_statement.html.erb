@@ -5,6 +5,23 @@
 
 <center>
 
+
+<div class ="pull-right">
+<%= form_tag @bank_account_path, :method => 'get', :id => "transaction_search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search], :class => 'btte col-md-6' %>
+    <%= submit_tag "Search", :name => nil, :class => 'btn btn-wwhite' %>
+  </p>
+<% end %>
+</div>
+<div class ="pull-right">
+<%= form_tag @bank_account_path, :method => 'get', :id => "transaction_search" do %>
+  <p>
+    <%= text_field_tag :searchref, params[:searchref], :class => 'btte col-md-6', :placeholder => 'Search references' %>
+    <%= submit_tag "Search", :name => nil, :class => 'btn btn-wwhite' %>
+  </p>
+<% end %>
+</div>
   
   
   <div class= "card col-md-9">
@@ -33,14 +50,9 @@
         <td> <%= account.code %> - <%= account.name %></td>
         <td> </td>
         <% @sales_income = 0 %>
-         <% @sales_income += account.transactions.sum(:amount).round(2) + account.journal_entries.sum(:amount).round(2) + account.sales_entries.sum(:price).round(2) %>
-         <% @sales.each do |sale| %>
-         <% if sale.sales_type == 'invoice' %> 
-               <% @sales_income += sale.sales_entries.sum(:total_price) %>
-               
+        <% @sales_income += account.transactions.sum(:amount).round(2) + account.journal_entries.sum(:amount).round(2) %>
+        <% @sales_income += account.sales_entries.sum(:total_price) %>
     <% end %>
-     <% end %>
-     <% end %>
      <% end %>
              <td><%= @sales_income %></td>
          

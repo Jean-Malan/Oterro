@@ -10,7 +10,7 @@
     </div>
   <% end %>
 <center>
-<div class= "card col-md-12">
+<div class= "card col-md-12" id="purchase">
   <div class="card-header card-header-success">
                                     <h4 class="card-title">Draft Purchase Invoice</h4>
                                     <p class="card-category"></p>
@@ -24,7 +24,7 @@
    <th>  <%= f.label :customer_id %><br></th>
     <th> <%= f.collection_select(:contact_id, Contact.all, :id, :name, {:prompt => false},  class:"btn ml-auto")  %></th>
      <th>  <%=  f.text_field :invoice_number, placeholder: "Invoice number", class: 'form-control'  %></th>
-    <th>  <%=  f.select :purchases_type, Purchase.purchases_types.keys, {}, class: 'btn btn-default pull-right'  %></th>
+    <th class="purchase_type">  <%=  f.select :purchases_type, Purchase.purchases_types.keys, {}, class: 'btn btn-default pull-right'  %></th>
    </tr></center>
    <th></th>
   </div>
@@ -35,7 +35,7 @@
   
  
 <div class= "card">
-  <table class = "table">
+  <table class= "table">
     <thead>
     <tr>
       <th class ="colspan-1"></th>
@@ -51,14 +51,25 @@
     
 
       <div class = "card">
- <tbody class ="fields">
+ <tbody class ="fields" id="myTable">
     <%= f.fields_for :purchase_entries do |builder| %>
     <%= render 'purchase_entry', f: builder %>
     <% end %>
     </div>
   </div>
+
   </tbody>
   
+  <tr>
+     <td></td>
+ <td></td>
+ <td></td>
+ <td></td>
+ <td></td>
+ <td></td>
+ <td><h5>Total: </h5></td>
+ <td><strong><h5 class="total"></h5></strong></td>
+ </tr>
   </table>
   <%= link_to_add_row('Add line', f, :purchase_entries, class: 'btn btn-warning') %>
   </br> </br>

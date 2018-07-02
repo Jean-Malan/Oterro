@@ -7,17 +7,43 @@ class BankAccountsController < ApplicationController
     @bank_accounts = BankAccount.all
     @transactions = Transaction.all
   end
+  
 
   # GET /bank_accounts/1
   # GET /bank_accounts/1.json
   def show
+    @total = Transaction.all
+    @transactions = Transaction.paginate(:per_page => 35, :page => params[:page]).search(params[:search]).searchref(params[:searchref]).order('created_at DESC')
+  end
+  
+  
+    def unallocated
+    @bank_accounts = BankAccount.all
     @transactions = Transaction.all
   end
-
+  
+  
+    def import
+     Transaction.import(params[:file])
+     redirect_to :back, notice: "Transactions imported."
+  end
+  
+ 
   # GET /bank_accounts/new
   def new
     @bank_account = BankAccount.new
   end
+
+def destroy_multiple
+
+  Transaction.destroy(params[:transactions])
+
+  respond_to do |format|
+    format.html { redirect_to blog_posts_path }
+    format.json { head :no_content }
+  end
+
+end
 
   # GET /bank_accounts/1/edit
   def edit
@@ -44,7 +70,7 @@ class BankAccountsController < ApplicationController
   def update
     respond_to do |format|
       if @bank_account.update(bank_account_params)
-        format.html { redirect_to @bank_account, notice: 'Bank account was successfully updated.' }
+        format.html { redirect_to redirect_to :back, notice: 'Bank account was successfully updated.' }
         format.json { render :show, status: :ok, location: @bank_account }
       else
         format.html { render :edit }
@@ -73,4 +99,7 @@ class BankAccountsController < ApplicationController
     def bank_account_params
       params.require(:bank_account).permit(:code, :name, :opening_balance)
     end
+    
+      private
+
 end

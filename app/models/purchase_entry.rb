@@ -9,12 +9,13 @@ class PurchaseEntry < ActiveRecord::Base
        belongs_to :product
        
        
-       enum vat_type: {
-    standard_rate_purchases_15:                     0,
-    standard_rate_sales_15:                         1,
-    standard_rate_sales_capital_goods_15:           2,
-    zero_rated_sales_excluding_goods_exported:      3,
-    zero_rated_only_exported_goods:                 4
+ enum vat_type: {
+    no_vat:                                         0,
+    standard_rate_purchases_15:                     1,
+    standard_rate_sales_15:                         2,
+    standard_rate_sales_capital_goods_15:           3,
+    zero_rated_sales_excluding_goods_exported:      4,
+    zero_rated_only_exported_goods:                 5
   }
      
        

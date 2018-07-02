@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180618093039) do
+ActiveRecord::Schema.define(version: 20180621044119) do
 
   create_table "bank_accounts", force: :cascade do |t|
     t.integer  "code"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 20180618093039) do
     t.float    "total_amount"
     t.integer  "purchase_id"
     t.integer  "sale_id"
+    t.float    "net_amount"
   end
 
 end

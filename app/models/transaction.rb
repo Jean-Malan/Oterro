@@ -8,6 +8,7 @@ class Transaction < ActiveRecord::Base
     belongs_to :purchase
     belongs_to :sale
     belongs_to :contact
+    belongs_to :bank_account
     
     
     enum transaction_type: {
@@ -16,11 +17,12 @@ class Transaction < ActiveRecord::Base
   }
   
    enum vat_type: {
-    standard_rate_purchases_15:                     0,
-    standard_rate_sales_15:                         1,
-    standard_rate_sales_capital_goods_15:           2,
-    zero_rated_sales_excluding_goods_exported:      3,
-    zero_rated_only_exported_goods:                 4
+    no_vat:                                         0,
+    standard_rate_purchases_15:                     1,
+    standard_rate_sales_15:                         2,
+    standard_rate_sales_capital_goods_15:           3,
+    zero_rated_sales_excluding_goods_exported:      4,
+    zero_rated_only_exported_goods:                 5
   }
 
 
@@ -48,10 +50,10 @@ end
   
   def format_vat
      if self.vat_type ==  "standard_rate_purchases_15" || self.vat_type ==  "standard_rate_sales_15" || self.vat_type ==  "standard_rate_sales_capital_goods_15"
-      self.vat_amount = ( self.total_amount * 0.15) / (1 + 0.15)
-      self.amount = self.total_amount / (1.15)
+      self.vat_amount = ( self.amount * 0.15) / (1 + 0.15)
+      self.net_amount = self.amount / (1.15)
      else if self.vat_type == "zero_rated_sales_excluding_goods_exported" || self.vat_type == "zero_rated_only_exported_goods"
-      self.total_amount = self.total_amount * 1
+      self.amount = self._total_amount
      else
       self.vat = 0
      end
@@ -63,9 +65,44 @@ end
       self.vat_amount = self.vat_amount.round(2)
             self.amount = self.amount.round(2)
      end
-
-      self.total_amount = self.total_amount.round(2)
+      if self.net_amount.present?
+      self.net_amount = self.net_amount.round(2)
+     end
   end
 
-   
+   def self.import(file)
+    bank_id = @bank_account_id 
+   CSV.foreach(file.path, headers: true) do |row|
+    Transaction.create! row.to_hash.merge(bank_account_id: bank_id)
+  end
+  end
+    
+    def self.search(search)
+  if search
+    where('description LIKE ?', "%#{search}%") 
+  else
+    all
+  end
+end
+
+    def self.searchref(searchref)
+  if searchref
+    where('reference LIKE ?', "%#{searchref}%") 
+  else
+    all
+  end
+end
+
+
+#def self.search(dat)
+#
+#    if date
+#    where('date LIKE ?', "%#{date}%") 
+#  else
+#    all
+#  end
+#end
+
+
+
 end

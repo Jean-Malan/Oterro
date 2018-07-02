@@ -65,8 +65,8 @@
                 <td> <%= entry.product_id ? entry.product.name : ' ' %></td>
                <td> <%= entry.gl_account ? entry.gl_account.name : ' ' %></td>
                  <td> <%= entry.quantity %></td>
-                  <td> <%= entry.vat_amount.round(2) %></td>
-                   <td> <%= entry.net_price.round(2) %></td>
+                  <td> <%= entry.vat_amount.to_f.round(2) %></td>
+                   <td> <%= entry.net_price.to_f.round(2) %></td>
                      <td><strong><%= entry.price.round(2)  %></strong></td>
               </tr>
                 <% end %>

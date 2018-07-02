@@ -11,6 +11,11 @@ class TransactionsController < ApplicationController
   # GET /transactions/1.json
   def show
   end
+  
+  def import
+     Transaction.import(params[:file])
+     redirect_to :back, notice: "Transactions imported."
+  end
 
   # GET /transactions/new
   def new
@@ -23,6 +28,18 @@ class TransactionsController < ApplicationController
   def edit
   end
 
+def destroy_multiple
+
+  Transaction.destroy(params[:transactions])
+
+  respond_to do |format|
+    format.html { redirect_to blog_posts_path }
+    format.json { head :no_content }
+  end
+
+end
+
+
   # POST /transactions
   # POST /transactions.json
   def create
@@ -30,7 +47,7 @@ class TransactionsController < ApplicationController
 
     respond_to do |format|
       if @transaction.save
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
+        format.html {redirect_to :back, notice: 'Transaction was successfully created.' }
         format.json { render :show, status: :created, location: @transaction }
       else
         format.html { render :new }
@@ -44,7 +61,7 @@ class TransactionsController < ApplicationController
   def update
     respond_to do |format|
       if @transaction.update(transaction_params)
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
+        format.html {redirect_to :back, notice: 'Transaction was successfully updated.' }
         format.json { render :show, status: :ok, location: @transaction }
       else
         format.html { render :edit }

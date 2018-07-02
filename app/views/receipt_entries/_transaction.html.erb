@@ -11,7 +11,7 @@
         <td><%= f.text_field :reference, label: false, class: 'form-control input'  %></td>
         <td>  <%= f.collection_select :bank_account_id, BankAccount.all, :id, :name, {:prompt => false},class:"btn"%></td>
         <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn"%></td>
-        <td class='btn btn-white'>  <%= f.input :vat_type, as: :select, label: " '", collection: Transaction.vat_types.map { |key, value| [key.humanize, key] }%></td>
+        <td><%= f.collection_select :vat_type, Transaction.vat_types.map{ |dp| [dp.first, dp.first.humanize] }, :first, :second,{:prompt => false},class:"btn btn-sm"  %></td>
         <td> <%= f.text_field :total_amount, class: 'form-control input'  %></td>
      
     </table>

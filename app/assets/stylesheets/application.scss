@@ -1,7 +1,209 @@
+$green: #47A44B;
+$gray: #bbbbbb;
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+
+
+input[type="checkbox"]:checked ~ #sidebarMenu {
+    transform: translateX(0);
+}
+
+
+.sidebarIconToggle {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: absolute;
+    z-index: 99;
+    height: 100%;
+    width: 100%;
+    top: 22px;
+    left: 15px;
+    height: 22px;
+    width: 22px;
+}
+.spinner {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background-color: #fff;
+}
+.horizontal {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+}
+.diagonal.part-1 {
+    position: relative;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    float: left;
+}
+.diagonal.part-2 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    opacity: 0;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    transform: rotate(135deg);
+    margin-top: 8px;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    transform: rotate(-135deg);
+    margin-top: -9px;
+}
+
+
+.button {
+  outline:none;
+  height: 40px;
+  text-align: center;
+  width: 130px;
+  border-radius:40px;
+  background: #fff;
+  border: 2px solid $green;
+  color:$green;
+  letter-spacing:1px;
+  text-shadow:0;
+  font:{
+    size:12px;
+    weight:bold;
+  }
+  cursor: pointer;
+  transition: all 0.25s ease;
+  &:hover {
+    color:white;
+    background: $green;
+  }
+  &:active {
+    //letter-spacing: 2px;
+    letter-spacing: 2px ;
+  }
+  &:after {
+    content:"SUBMIT";
+  }
+}
+
+.onclic {
+  width: 40px;
+  border-color:$gray;
+  border-width:3px;
+  font-size:0;
+  border-left-color:$green;
+  animation: rotating 2s 0.25s linear infinite;
+
+  &:after {
+    content:"";
+  }
+  &:hover {
+    color:$green;
+    background: white;
+  }
+}
+.validate {
+  font-size:13px;
+  color: white;
+  background: $green;
+  &:after {
+    font-family:'FontAwesome';
+    content:"\f00c";
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 
 
 
+table.fold-table {
+  > tbody {
+    // view segment
+    > tr.view {
+      td,
+      th {
+        cursor: pointer;
+      }
+      td:first-child,
+      th:first-child {
+        &:before {
+          position: absolute;
+          top: 50%;
+          left: 5px;
+          width: 9px;
+          height: 16px;
+          font: 16px fontawesome;
+          color: #fff;
+          content: "\f0d7";
+          transition: all 0.3s ease;
+        }
+      }
+      &:nth-child(4n-1) {
+        background: #fff;
+      }
+      &:hover {
+        background: #ededed;
+      }
+      &.open {
+        background: #f7f7f7;
+        color: black;
+        td:first-child,
+        th:first-child {
+          &:before {
+            transform: rotate(-180deg);
+            color: #fff;
+          }
+        }
+      }
+    }
+
+    // fold segment
+    > tr.fold {
+      display: none;
+      &.open {
+        background: #f7f7f7;
+        display: table-row;
+      }
+    }
+  }
+}
+
+// fold content
+.fold-content {
+  h3 {
+  }
+  > table {
+
+    > tbody {
+      tr:nth-child(even) {
+        background: #fff;
+      }
+    }
+  }
+}
 
 
  [type="date"] {
@@ -18,6 +220,20 @@
 
 .zoom {
   zoom: 80%;
+}
+
+.pretty th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.pretty th .asc {
+  background-image: url(/images/up_arrow.gif);
+}
+
+.pretty th .desc {
+  background-image: url(/images/down_arrow.gif);
 }
 
 .simple_form {
@@ -5785,7 +6001,7 @@ tbody.collapse.show {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-left: 0;
+  padding-left: 3px;
   list-style: none;
   border-radius: 0.25rem; }
 
@@ -5835,11 +6051,11 @@ tbody.collapse.show {
 
 .pagination-lg .page-link {
   padding: 0.75rem 0;
-  font-size: 1.25rem;
-  line-height: 1.5; }
+  font-size: 3.25rem;
+  line-height: 2.5; }
 
 .pagination-lg .page-item:first-child .page-link {
-  border-top-left-radius: 0.3rem;
+  border-top-left-radius: 0.9rem;
   border-bottom-left-radius: 0.3rem; }
 
 .pagination-lg .page-item:last-child .page-link {
@@ -5848,7 +6064,7 @@ tbody.collapse.show {
 
 .pagination-sm .page-link {
   padding: 0.25rem 0;
-  font-size: 0.875rem;
+  font-size: 1.875rem;
   line-height: 1.5; }
 
 .pagination-sm .page-item:first-child .page-link {
@@ -17538,8 +17754,8 @@ Copyright (c) 2015 Daniel Eden
   }
     
     .pagination-lg .page-link{
-      padding:.75rem 1.5rem;
-      font-size:1.25rem;
+      padding:.75rem 3.5rem;
+      font-size: 1.25rem;
       line-height:1.5
       
     }

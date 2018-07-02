@@ -8,5 +8,9 @@ module ApplicationHelper
     end
     link_to(name, '', class: "add_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")})
   end
+  
+def number_to_currency_br(number)
+  number_to_currency(number, :unit => "R ", :separator => ",", :delimiter => ".")
+end
 
 end

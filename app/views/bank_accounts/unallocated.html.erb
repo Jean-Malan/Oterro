@@ -10,15 +10,7 @@
     <div class="card-icon">
     <i class="material-icons">store</i>
   </div>
-   <p class="card-category"> Account balance:</p>
-   <% @bank_total = 0 %>
-    <h3 class="card-title"> <% @total.each do |transaction| %>
-                            <% if transaction.bank_account_id == @bank_account.id %>
-                            <% @bank_total += transaction.amount.to_f.round(2) %>
-                             <% end %> 
-                              <% end %> 
-                              <%= @bank_total.round(3) %></h3>
-                              
+
                             
                          
                             
@@ -28,63 +20,36 @@
      </div>
      
 
-<tr>
-<th><%= link_to 'Add General Payment', new_payment_entry_path, class:'btn btn-warning' %> </th><th><%= link_to 'Add Invoice Payments', payment_entries_invoice_entry_path, class:'btn btn-warning' %> </th> <th><%= link_to 'New General Receipts', new_receipt_entry_path, class:'btn btn-success' %> </th>  <th><%= link_to 'New Invoice Receipts', receipt_entries_invoice_entry_path, class:'btn btn-success' %></th>
-</tr>
+<%= link_to 'Add General Payment', new_payment_entry_path, class:'btn btn-warning' %> | <%= link_to 'Add Invoice Payments', payment_entries_invoice_entry_path, class:'btn btn-warning' %> | <%= link_to 'New General Receipts', new_receipt_entry_path, class:'btn btn-success' %> | <%= link_to 'New Invoice Receipts', receipt_entries_invoice_entry_path, class:'btn btn-success' %>
+<%= form_tag import_transactions_path, multipart: true do %>
+<div class='btn btn-white col-md-2 btn-small pull-left'><%= file_field_tag :file %></div>
+<%= submit_tag 'Import CSV', class: ' col-med-3 btn btn-info'%>
+<%end%>
 
- <th class='pull-right btn btn-white'><%= form_tag import_bank_accounts_path, multipart: true do %>
-<%= file_field_tag :file %>
-<%= submit_tag 'Import CSV'%>
-<%end%></th>
-
-
-
-
-
-<div class ="pull-right">
-<%= form_tag @bank_account_path, :method => 'get', :id => "transaction_search" do %>
-  <p>
-    <%= text_field_tag :search, params[:search], :class => 'btte' %>
-    <%= submit_tag "Search", :name => nil, :class => 'btn btn-wwhite' %>
-  </p>
-<% end %>
-</div>
-<div class ="pull-right">
-<%= form_tag @bank_account_path, :method => 'get', :id => "transaction_search" do %>
-  <p>
-    <%= text_field_tag :searchref, params[:searchref], :class => 'btte', :placeholder => 'Search references' %>
-    <%= submit_tag "Search", :name => nil, :class => 'btn btn-wwhite' %>
-  </p>
-<% end %>
-
-</div>
 
 
  <div class="card">
-     
+     <div class="accordion">
  <div class="card-body table-responsive">
-   <table class="table table-hover fold-table">
+     <table class="table table-hover fold-table">
     <thead class="text-warning">
-  
-          <th scope="col"></th>
+      <tr>
         <th scope="col">Date</th>
-        <th> Reference</th>
+         <th colspan="0.3">Reference</th>
         <th scope="col">Description</th>
         <th scope="col">Account</th>
-         <th scope="col">Vat</th>
         <th scope="col">Amount</th>
 
         <th colspan="1"></th>
       </tr>
       </thead>
       <tbody>
-     
-       <%= form_tag destroy_multiple_transactions_path, method: :destroy do %>
-        <% @transactions.each do |transaction| %>
-         <% if transaction.bank_account_id == @bank_account.id %>
+
+       <% @transactions.each do |transaction| %>
+       <% if  transaction.bank_account_id == nil || transaction.gl_account_id == nil %>
           <tr class="view">
-     <td><%= check_box_tag "[]", transaction %></td>
-          <% if transaction.amount.to_f < 0 %>
+          <% if  transaction.amount < 0  %>
+             
     <td> <font color =" #EC971F"><%= transaction.date %></font></td>
      <% else %>
     <td>   <font color =" #47A44B"><%= transaction.date %></font></td>
@@ -96,8 +61,8 @@
               <%else%>
                <td class ='text-danger'><%= transaction.contact_id ? transaction.contact_id.name.to_s : "Not mapped - find this transaction a home!"%></div></td>
                <%end%>
-               <td><div class ="table-color"><%= link_to transaction.vat_amount ? number_to_currency(transaction.vat_amount, :unit => 'R') : ""  %></td>
-          <td><div class ="table-color"><%= link_to transaction.amount ? number_to_currency(transaction.amount, :unit => 'R')  : ""  %></td>
+               <td><div class ="table-color"><%= link_to transaction.vat_amount ? transaction.vat_amount.round(3) : ""  %></td>
+          <td><div class ="table-color"><%= link_to transaction.amount ? transaction.amount.round(3) : ""  %></td>
            <td><%= link_to 'More', edit_transaction_path(transaction) %> | 
                <%= link_to 'Delete', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -111,30 +76,29 @@
         <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn btn-sm", id:"office_address"%></td>
          <td><%= f.collection_select :vat_type, Transaction.vat_types.map{ |dp| [dp.first, dp.first.humanize] }, :first, :second,{:prompt => false},class:"btn btn-sm"  %></td>
         <td> <%= f.text_field :amount, class: 'form-control input'  %></td>
-         <td>   <%= f.submit 'Update', class:'button'%></td> 
+         <td><%= f.collection_select :bank_account_id, BankAccount.all, :id, :name, {:prompt => false},class:"btn btn-sm", id:"office_address"%></td>
+         <td>   <%= f.submit 'Update Transaction', class: 'btn btn-success btn-sm'%></td> 
        </div>
      </tr>
      
        <%end%>
-       
+       <%end%>
          <%end%>
                
-        <%end%>
-      
+       
       </tbody>
     </table>
-
+    </div>
+    </div>
 
 </div>
 </div>
 <br>
-    <%= submit_tag "Delete selected" %>
-<% end %>
 
-<%= link_to 'Edit', edit_bank_account_path(@bank_account) %> |
+<%= link_to 'Edit', edit_transaction_path(@transactions) %> |
 <%= link_to 'Back', bank_accounts_path %>
 
-<%= will_paginate @transactions %>
+<div class ="pagination
 
 
 

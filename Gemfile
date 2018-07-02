@@ -24,7 +24,8 @@ gem 'bootstrap-sass'
 gem "font-awesome-rails"
 gem "responders"
 gem 'simple_form'
-gem 'ransack'
+
+gem 'roo'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

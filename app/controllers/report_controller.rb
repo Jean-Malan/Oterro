@@ -2,9 +2,8 @@ class ReportController < ApplicationController
   def income_statement
     
   @gl_accounts = GlAccount.all
-  @transactions = Transaction.all
-  @sales = Sale.all
-  @purchases = Purchase.all
+  @sales = Sale.all.where("sales_type =?", 'invoice')
+  @purchases = Purchase.all.where("purchases_type =?", 'invoice')
 
   
   end

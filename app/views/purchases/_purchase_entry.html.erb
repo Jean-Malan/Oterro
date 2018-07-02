@@ -5,10 +5,12 @@
     </td>
       <td class="col-md-1"> <%= f.collection_select :product_id, Product.all, :id, :name, {:prompt => false},class:"btn btn-sm" %></td>
      <td><%= f.text_field :description, label: false, class:"form-control" %></td>
-    <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn" %></td>
-    <td style="width:  8.33%"> <%=f.select :vat_type, PurchaseEntry.vat_types.keys.map { |w| [w.humanize, w] },{:prompt => false},class:"btn" %></td>
-    <td><%= f.text_field :quantity, label: false, class:"form-control" %></td>
-    <td><%= f.text_field :price, label: false, class:"form-control" %></td>
+    <td><%= f.collection_select :gl_account_id, GlAccount.all, :id, :name, {:prompt => false},class:"btn btn-sm" %></td>
+    <td><%= f.collection_select :vat_type, PurchaseEntry.vat_types.map{ |dp| [dp.first, dp.first.humanize] }, :first, :second,{:prompt => false},class:"btn btn-sm"  %></td>
+    <td><%= f.text_field :quantity, label: false, class:"form-control qty"%></td>
+    <td><%= f.text_field :price, label: false, class:"form-control price"%></td>
+    <td id="amount"><p class='amount' id-"amount">0.00</p></td>
+    
     
      
 </tr>

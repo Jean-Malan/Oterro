@@ -39,20 +39,181 @@ $( "#other" ).click(function() {
   
 });
 
+$(function() {
+  $( ".button" ).click(function() {
+    $( ".button" ).addClass( "onclic", 250, validate);
+  });
+
+  function validate() {
+    setTimeout(function() {
+      $( ".button" ).removeClass( "onclic" );
+      $( ".button" ).addClass( "validate", 450, callback );
+    }, 2250 );
+  }
+    function callback() {
+      setTimeout(function() {
+        $( ".button" ).removeClass( "validate" );
+      }, 1250 );
+    }
+  });
+  
+
+  // ------Invoice header
+  
+  $(document).on('click', '#purchase',function (){
+
+    $('#purchase').change(function() {
+        update_purchase();
+    
+  });
+  });
+
+ function update_purchase(){
+    if( $('.purchase_type').val() == 'DRAFT' ){
+      $('#purchase').removeClass('card-header-success').addClass('card-header-danger');
+    
+ };
+ };
+
+
+  
 // Invoice Application 
 
-function findTotal(){
-    var qty = document.getElementById('qty');
-     var price = document.getElementById('price');
-     var tot=0;
-     tot = qty * price
-     
-     return tot
-     
-}
+
+$(function(){
+  $(".fold-table tr.view").on("click", function(){
+    $(this).toggleClass("open").next(".fold").toggleClass("open");
+  });
+});
+
+// Invoice Fields // 
+
+$(document).on('click', '#transactionType',function (){
     
+    $('tr').change(function() {
+        update_fields();
+    });
     
+});
+
+
+ function update_fields(){
+$('tr').each(function(){
+    if( $('#select').val() == 'standard' ){
+        $('.invoice').hide();
+        $('.standard').show();
+    } else if( $('#select').val() == 'invoice' ){
+        $('.standard').hide();
+        $('.invoice').show();
+    }
+
+   
+});
+};
+
+// Total amount invoices /
+
+$(document).on('click', '#myTable',function (){
     
+      update_amounts();
+    $('#amount').change(function() {
+        update_amounts();
+    });
+    
+});
+
+$(document).on('click', '#myTable',function (){
+    
+      update_amounts();
+    $('#amount').change(function() {
+        update_amounts();
+    });
+    
+});
+
+
+
+ function update_amounts()
+{
+    var sum = 0.0;
+    var vatDue = 0.0
+    $('#myTable > tr').each(function() {
+        var vat = $(this).find('.vat').val();
+        var qty = $(this).find('.qty').val();
+        var price = $(this).find('.price').val();
+        var amount = (qty * price);
+        sum += amount;
+        $(this).find('#amount').text('R'+ amount.toFixed(2));
+    });
+     $('.total').text(sum.toFixed(2));
+};
+
+
+
+    
+$(document).on('click', '.navbar-toggler', function() {
+  $toggle = $(this);
+
+  if (mobile_menu_visible == 1) {
+    $('html').removeClass('nav-open');
+
+    $('.close-layer').remove();
+    setTimeout(function() {
+      $toggle.removeClass('toggled');
+    }, 400);
+
+    mobile_menu_visible = 0;
+  } else {
+    setTimeout(function() {
+      $toggle.addClass('toggled');
+    }, 430);
+
+    var $layer = $('<div class="close-layer"></div>');
+
+    if ($('body').find('.main-panel').length != 0) {
+      $layer.appendTo(".main-panel");
+
+    } else if (($('body').hasClass('off-canvas-sidebar'))) {
+      $layer.appendTo(".wrapper-full-page");
+    }
+
+    setTimeout(function() {
+      $layer.addClass('visible');
+    }, 100);
+
+    $layer.click(function() {
+      $('html').removeClass('nav-open');
+      mobile_menu_visible = 0;
+
+      $layer.removeClass('visible');
+
+      setTimeout(function() {
+        $layer.remove();
+        $toggle.removeClass('toggled');
+
+      }, 400);
+    });
+
+    $('html').addClass('nav-open');
+    mobile_menu_visible = 1;
+
+  }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if ("undefined" == typeof jQuery) throw new Error("Bootstrap's JavaScript requires jQuery. jQuery must be included before Bootstrap's JavaScript.");
 ! function(t) {

@@ -8,9 +8,9 @@
                                         <i class="material-icons">store</i>
                                     </div>
                                     <p class="card-category">Sales - Past 30 Days </p>
-                                    <h3 class="card-title"><% @totals = 0 %>
+                                    <h3 class="card-title"> <% @totals = 0 %>
                                                             <% @sale_total.each do |sales| %>
-                                                            <% if sales.sales_type = "invoice" %>
+                                                            <% if sales.sales_type = "invoice"%>
                                                             <% @totals += sales.amount.round(2) %>
                                                             <% end %>
                                                             <% end %>
@@ -36,7 +36,9 @@
                                     </div>
                                     <p class="card-category">Bank balance</p>
                                     <h3 class="card-title"> <% @total = 0 %> <% @transactions.each do |transactions| %>
-                                                            <% @total += transactions.total_amount %>
+                                                            <% if transactions.amount.present? %>
+                                                            <% @total += transactions.amount %>
+                                                            <% end %>
                                                             <% end %>
                                                             R<%= @total.round(2) %></h3>
                                                            
@@ -101,8 +103,8 @@
                                         </tr></thead>
                                         <tbody>
                                             <tr>
-                                                <% @sale.limit(5).each do |sale|%>
-                                                <% if sale.balance == nil %>
+                                                <% @sale.limit(4).each do |sale|%>
+                                                <% if sale.balance == 0 %>
                                                 <td> <%= link_to "Inv #{sale.id}", sale_path(sale), class: 'text-danger' %></td>
                                                <td> <%= link_to sale.contact.name, sale_path(sale), class: 'text-danger' %></td>
                                                 <td><%= link_to sale.amount, sale_path(sale), class: 'text-danger'  %></td>
@@ -136,7 +138,7 @@
                                         <tbody>
                                             <tr>
                                                 <% @sale.limit(4).each do |sale|%>
-                                                <% if sale.balance != nil && sale.balance < sale.amount %>
+                                                <% if sale.balance != 0 && sale.balance < sale.amount %>
                                                 <td> <%= link_to "Inv #{sale.id}", sale_path(sale), class: 'text-warning' %></td>
                                                <td> <%= link_to sale.contact.name, sale_path(sale), class: 'text-warning' %></td>
                                                 <td><%= link_to sale.amount, sale_path(sale), class: 'text-warning'  %></td>
@@ -244,6 +246,11 @@
                                                             </button>
                                                         </td>
                                                     </tr>
+                                                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
                                                     <tr>
                                                         <td>
                                                             <div class="form-check">
